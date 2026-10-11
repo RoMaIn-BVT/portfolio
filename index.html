@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Romain Bonvalet — Portfolio BTS SIO SISR</title>
+    <meta name="description" content="Portfolio de Romain Bonvalet, étudiant en BTS SIO option SISR (systèmes & réseaux). Recherche d'un contrat d'apprentissage d'un an à partir de septembre 2026.">
+    <meta name="author" content="Romain Bonvalet">
+    <meta name="theme-color" content="#070b14">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Romain Bonvalet — Administrateur systèmes & réseaux en devenir">
+    <meta property="og:description" content="BTS SIO SISR · Docker, Ansible, GitLab, Linux, réseaux Cisco. Recherche une alternance pour septembre 2026.">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script type="importmap">
+        { "imports": { "three": "./js/vendor/three.module.min.js" } }
+    </script>
+</head>
+<body>
+    <a class="skip-link" href="#about">Aller au contenu</a>
+
+    <!-- Séquence de démarrage -->
+    <div class="boot" id="boot" aria-hidden="true">
+        <pre class="boot-log" id="boot-log"></pre>
+    </div>
+
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+    <!-- Navigation -->
+    <header class="nav" id="navbar">
+        <div class="container nav-inner">
+            <a href="#home" class="logo" aria-label="Retour en haut">
+                <span class="logo-prompt">~/</span>romain<span class="logo-cursor">_</span>
+            </a>
+            <button class="menu-toggle" id="menu-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-menu">
+                <span></span><span></span><span></span>
+            </button>
+            <nav aria-label="Navigation principale">
+                <ul id="nav-menu">
+                    <li><a href="#about">Profil</a></li>
+                    <li><a href="#projects">Projets</a></li>
+                    <li><a href="#parcours">Parcours</a></li>
+                    <li><a href="#skills">Compétences</a></li>
+                    <li><a href="#reports">Rapports</a></li>
+                    <li><a href="#contact" class="nav-cta">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero : réseau 3D -->
+        <section id="home" class="hero">
+            <canvas id="hero-canvas" class="hero-canvas" aria-hidden="true"></canvas>
+            <div class="hero-vignette" aria-hidden="true"></div>
+            <div class="container hero-content">
+                <p class="status-badge"><span class="dot"></span> Disponible — alternance septembre 2026</p>
+                <h1 class="hero-title">
+                    <span class="hero-hello">Bonjour, je suis</span>
+                    <span class="glitch" data-text="Romain Bonvalet">Romain Bonvalet</span>
+                </h1>
+                <p class="hero-sub">Étudiant en <strong>BTS SIO</strong>, option <strong>SISR</strong> — Solutions d'Infrastructure, Systèmes et Réseaux.</p>
+                <div class="terminal-line" aria-live="polite">
+                    <span class="prompt">romain@sisr:~$</span>
+                    <span id="typed" class="typed"></span><span class="caret" aria-hidden="true"></span>
+                </div>
+                <div class="hero-actions">
+                    <a href="#about" class="btn btn-primary">Découvrir mon profil</a>
+                    <button type="button" class="btn btn-ghost" data-action="cv">Voir mon CV</button>
+                </div>
+                <ul class="hero-stats">
+                    <li><strong data-count="9">0</strong><span>stages IT</span></li>
+                    <li><strong data-count="34">0</strong><span>semaines en entreprise</span></li>
+                    <li><strong data-count="6">0</strong><span>projets techniques</span></li>
+                    <li><strong data-count="5">0</strong><span>rapports de stage</span></li>
+                </ul>
+            </div>
+            <p class="hero-hint" aria-hidden="true">Bougez la souris : chaque nœud est un équipement, chaque particule un paquet.</p>
+            <a href="#about" class="scroll-indicator" aria-label="Défiler vers le profil"><span></span></a>
+        </section>
+
+        <!-- Profil -->
+        <section id="about" class="section">
+            <div class="container">
+                <header class="section-head reveal">
+                    <p class="eyebrow">01 · Profil</p>
+                    <h2>À propos de moi</h2>
+                </header>
+                <div class="about-grid">
+                    <aside class="id-card tilt reveal" data-tilt-max="10">
+                        <div class="id-card-glare" aria-hidden="true"></div>
+                        <div class="id-card-top">
+                            <span class="chip" aria-hidden="true"></span>
+                            <span class="id-label">ACCESS CARD · SISR</span>
+                        </div>
+                        <div class="avatar" aria-hidden="true">
+                            <span>RB</span>
+                        </div>
+                        <h3>Romain Bonvalet</h3>
+                        <p class="muted">21 ans · Rennes / Vannes</p>
+                        <ul class="id-list">
+                            <li><span aria-hidden="true">✉</span><a href="mailto:romainbonvalet43@gmail.com">romainbonvalet43@gmail.com</a></li>
+                            <li><span aria-hidden="true">⛟</span>Permis B · véhiculé</li>
+                            <li><span aria-hidden="true">⌘</span>Anglais : intermédiaire</li>
+                        </ul>
+                        <button type="button" class="btn btn-primary btn-block" data-action="cv">Télécharger le CV</button>
+                        <div class="barcode" aria-hidden="true"></div>
+                    </aside>
+
+                    <div class="about-text">
+                        <div class="reveal">
+                            <h3>Profil professionnel</h3>
+                            <p>Étudiant en <strong>BTS Services Informatiques aux Organisations</strong>, je recherche une <strong>alternance à partir de septembre 2026</strong>. Depuis la rentrée de <strong>septembre 2025</strong>, je poursuis ma formation au sein de <strong>l'école AFTEC de Rennes</strong>. Motivé, je souhaite intégrer une structure pour développer mon expertise tout en contribuant activement au bon fonctionnement de son système d'information.</p>
+                            <p>Mon parcours a débuté avec un <strong>Bac pro Systèmes Numériques</strong> (2020-2023) au Lycée St Joseph de Vannes, avant de poursuivre en <strong>BTS SIO SISR</strong> au Lycée Pôle Sup de La Salle à Rennes à partir de 2023.</p>
+                        </div>
+                        <div class="about-cols">
+                            <div class="mini-card reveal">
+                                <h4>Savoir-être</h4>
+                                <ul class="check-list">
+                                    <li>Bon relationnel, esprit d'équipe</li>
+                                    <li>Rigueur, sens de l'organisation</li>
+                                    <li>Curiosité pour les innovations technologiques</li>
+                                    <li>Autonomie et prise d'initiative</li>
+                                </ul>
+                            </div>
+                            <div class="mini-card reveal">
+                                <h4>Centres d'intérêt</h4>
+                                <ul class="interest-list">
+                                    <li><span aria-hidden="true">⚽</span> Football en club depuis 4 ans, basket, athlétisme</li>
+                                    <li><span aria-hidden="true">🎮</span> Jeux vidéo</li>
+                                    <li><span aria-hidden="true">✈️</span> Voyages à l'étranger</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="evolution reveal">
+                            <h4>Mon évolution en 5 ans</h4>
+                            <ol class="evolution-steps">
+                                <li><span>2021</span>Hardware &amp; assemblage PC</li>
+                                <li><span>2022</span>Stage international à Malte</li>
+                                <li><span>2023</span>SI critique en milieu hospitalier</li>
+                                <li><span>2024</span>Administration &amp; sécurisation SI</li>
+                                <li><span>2025</span>DevOps, Docker &amp; automatisation</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projets -->
+        <section id="projects" class="section section-alt">
+            <div class="container">
+                <header class="section-head reveal">
+                    <p class="eyebrow">02 · Projets</p>
+                    <h2>Projets réalisés</h2>
+                    <p class="section-lead">Le projet phare de mon dernier stage, en 3D : faites pivoter la stack et survolez les conteneurs.</p>
+                </header>
+
+                <article class="featured reveal">
+                    <div class="featured-scene">
+                        <canvas id="docker-canvas" aria-label="Représentation 3D de la stack Docker phpIPAM : conteneurs phpipam, cron, mariadb et powerdns sur un hôte Linux" role="img"></canvas>
+                        <div class="scene-tooltip" id="docker-tooltip" hidden></div>
+                        <div class="scene-controls">
+                            <button type="button" class="btn btn-mono" id="docker-replay"><span aria-hidden="true">$</span> docker compose up -d</button>
+                        </div>
+                        <p class="scene-hint" aria-hidden="true">Glisser pour pivoter</p>
+                    </div>
+                    <div class="featured-body">
+                        <p class="tag-line">Région Bretagne · 2025 · Projet phare</p>
+                        <h3>Dockerisation de phpIPAM</h3>
+                        <p>Création des serveurs de <strong>production</strong> et de <strong>test</strong> et d'une stack Docker complète pour l'outil de gestion d'adresses IP <strong>phpIPAM</strong>. Schématisation de l'architecture, tests et validation des environnements, migration du code via <strong>GitLab</strong> et rédaction de la documentation technique.</p>
+                        <ul class="container-legend" id="docker-legend">
+                            <li data-container="phpipam"><i style="--c:#22d3ee"></i><code>phpipam</code> interface web IPAM</li>
+                            <li data-container="cron"><i style="--c:#a78bfa"></i><code>cron</code> scans &amp; tâches planifiées</li>
+                            <li data-container="mariadb"><i style="--c:#4ade80"></i><code>mariadb</code> base de données</li>
+                            <li data-container="powerdns"><i style="--c:#fb923c"></i><code>powerdns</code> serveur DNS</li>
+                        </ul>
+                        <ul class="tags">
+                            <li>Docker</li><li>Ansible</li><li>GitLab</li><li>Linux</li><li>DevOps</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <div class="projects-grid">
+                    <article class="project-card tilt reveal">
+                        <div class="card-glare" aria-hidden="true"></div>
+                        <div class="project-icon" aria-hidden="true">🌐</div>
+                        <h3>Refonte réseau avec Cisco Packet Tracer</h3>
+                        <p>Refonte complète d'un réseau informatique avec simulation de faisabilité. Étude de l'architecture existante et proposition d'améliorations.</p>
+                        <ul class="tags"><li>Cisco</li><li>LAN/WAN</li><li>Adressage IP</li></ul>
+                    </article>
+                    <article class="project-card tilt reveal">
+                        <div class="card-glare" aria-hidden="true"></div>
+                        <div class="project-icon" aria-hidden="true">🎫</div>
+                        <h3>Ticketing GLPI sous Linux</h3>
+                        <p>Gestion des demandes via GLPI : prise en charge, suivi et clôture des incidents pour améliorer la qualité du support utilisateur.</p>
+                        <ul class="tags"><li>GLPI</li><li>Linux</li><li>ITSM</li></ul>
+                    </article>
+                    <article class="project-card tilt reveal">
+                        <div class="card-glare" aria-hidden="true"></div>
+                        <div class="project-icon" aria-hidden="true">🖥️</div>
+                        <h3>Gestion du parc informatique</h3>
+                        <p>Gestion du parc via MobaXterm : configuration et maintien des serveurs et postes de travail en environnement professionnel.</p>
+                        <ul class="tags"><li>MobaXterm</li><li>SSH</li><li>Serveurs</li></ul>
+                    </article>
+                    <article class="project-card tilt reveal">
+                        <div class="card-glare" aria-hidden="true"></div>
+                        <div class="project-icon" aria-hidden="true">💽</div>
+                        <h3>Masterisation Windows 10/11</h3>
+                        <p>Création d'images système standardisées pour le déploiement en masse de postes de travail.</p>
+                        <ul class="tags"><li>Windows</li><li>SCCM</li><li>Déploiement</li></ul>
+                    </article>
+                    <article class="project-card tilt reveal">
+                        <div class="card-glare" aria-hidden="true"></div>
+                        <div class="project-icon" aria-hidden="true">🔧</div>
+                        <h3>Montage d'unités centrales</h3>
+                        <p>Assemblage complet : carte mère, RAM, alimentation, stockage. Diagnostic matériel et optimisation des performances.</p>
+                        <ul class="tags"><li>Hardware</li><li>Diagnostic</li></ul>
+                    </article>
+                    <article class="project-card tilt reveal">
+                        <div class="card-glare" aria-hidden="true"></div>
+                        <div class="project-icon" aria-hidden="true">🔌</div>
+                        <h3>Installation de baies de brassage</h3>
+                        <p>Installation et câblage de baies de brassage, dans le respect des standards de câblage réseau.</p>
+                        <ul class="tags"><li>Câblage</li><li>Infrastructure</li></ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Parcours -->
+        <section id="parcours" class="section">
+            <div class="container">
+                <header class="section-head reveal">
+                    <p class="eyebrow">03 · Parcours</p>
+                    <h2>Expériences &amp; formation</h2>
+                </header>
+
+                <div class="tabs reveal" role="tablist" aria-label="Type de parcours">
+                    <button role="tab" id="tab-stages" aria-controls="panel-stages" aria-selected="true">Stages IT <span class="count">9</span></button>
+                    <button role="tab" id="tab-jobs" aria-controls="panel-jobs" aria-selected="false" tabindex="-1">Autres expériences <span class="count">4</span></button>
+                    <button role="tab" id="tab-formation" aria-controls="panel-formation" aria-selected="false" tabindex="-1">Formation <span class="count">4</span></button>
+                    <span class="tab-indicator" aria-hidden="true"></span>
+                </div>
+
+                <div role="tabpanel" id="panel-stages" aria-labelledby="tab-stages" class="tab-panel">
+                    <ol class="timeline">
+                        <li class="timeline-item">
+                            <div class="timeline-date">Mai – juin 2025 · 6 sem.</div>
+                            <h3>Administration système &amp; DevOps</h3>
+                            <p class="timeline-org">Région Bretagne — Rennes</p>
+                            <p>Administration et sécurisation du SI régional. Dockerisation de phpIPAM, automatisation Ansible et mise à jour d'outils informatiques.</p>
+                        </li>
+                        <li class="timeline-item">
+                            <div class="timeline-date">Mai – juin 2024 · 6 sem.</div>
+                            <h3>Système d'information</h3>
+                            <p class="timeline-org">Région Bretagne — Rennes</p>
+                            <p>Administration et sécurisation du SI, migrations GitLab, supervision Centreon, gestion du parc et support utilisateurs.</p>
+                        </li>
+                        <li class="timeline-item">
+                            <div class="timeline-date">Janv. – févr. 2023 · 5 sem.</div>
+                            <h3>Migration système hospitalier</h3>
+                            <p class="timeline-org">Centre Hospitalier — Vannes</p>
+                            <p>Migration et remplacement complet d'un service avec récupération et intégration des données : projet critique qui exige rigueur et précision.</p>
+                        </li>
+                        <li class="timeline-item">
+                            <div class="timeline-date">Nov. – déc. 2022 · 3 sem.</div>
+                            <h3>Service informatique</h3>
+                            <p class="timeline-org">ADM — Saint-Nolff</p>
+                            <p>Support informatique et maintenance du parc. Résolution d'incidents et formation des utilisateurs.</p>
+                        </li>
+                        <li class="timeline-item">
+                            <div class="timeline-date">Févr. – mars 2022 · 5 sem.</div>
+                            <h3>Stage international — support technique</h3>
+                            <p class="timeline-org">Centro Casa Lingua — Malte</p>
+                            <p>Assistance technique en contexte international, communication en anglais et en espagnol, adaptation culturelle.</p>
+                        </li>
+                        <li class="timeline-item">
+                            <div class="timeline-date">Décembre 2021 · 2 sem.</div>
+                            <h3>Maintenance informatique</h3>
+                            <p class="timeline-org">AS Informatique — Vannes</p>
+                            <p>Dépannage, diagnostic de pannes et assemblage d'un PC gaming sur mesure pour un client.</p>
+                        </li>
+                        <li class="timeline-item">
+                            <div class="timeline-date">Juin 2021 · 4 sem.</div>
+                            <h3>Installation &amp; support</h3>
+                            <p class="timeline-org">Delta Informatique — Vannes</p>
+                            <p>Installation de postes et support utilisateurs. Sensibilisation aux bonnes pratiques informatiques.</p>
+                        </li>
+                        <li class="timeline-item">
+                            <div class="timeline-date">Décembre 2020 · 2 sem.</div>
+                            <h3>Assemblage PC</h3>
+                            <p class="timeline-org">Ordinov — Vannes</p>
+                            <p>Maintenance et assemblage de PC, apprentissage des techniques de montage et d'optimisation.</p>
+                        </li>
+                        <li class="timeline-item">
+                            <div class="timeline-date">Février 2020 · 1 sem.</div>
+                            <h3>Stage découverte — système d'information</h3>
+                            <p class="timeline-org">SAUR, service informatique — Vannes</p>
+                            <p>Découverte du SI d'une entreprise et premier contact avec l'environnement professionnel IT.</p>
+                        </li>
+                    </ol>
+                </div>
+
+                <div role="tabpanel" id="panel-jobs" aria-labelledby="tab-jobs" class="tab-panel" hidden>
+                    <div class="info-grid">
+                        <article class="info-card tilt">
+                            <div class="card-glare" aria-hidden="true"></div>
+                            <span class="info-icon" aria-hidden="true">🏭</span>
+                            <p class="info-period">Juillet – août 2024 · CDD 2 mois</p>
+                            <h3>Agent d'exploitation de stations d'épuration</h3>
+                            <p class="info-org">Golfe du Morbihan Vannes Agglo</p>
+                            <p>Maintenance des équipements de traitement des eaux usées, surveillance des paramètres et respect des normes environnementales.</p>
+                        </article>
+                        <article class="info-card tilt">
+                            <div class="card-glare" aria-hidden="true"></div>
+                            <span class="info-icon" aria-hidden="true">🏪</span>
+                            <p class="info-period">Décembre 2023 · CDD 1 semaine</p>
+                            <h3>Préparation de commandes &amp; mise en rayon</h3>
+                            <p class="info-org">Hyper U — Saint-Avé</p>
+                            <p>Préparation des commandes clients et organisation des rayons : logistique et service client.</p>
+                        </article>
+                        <article class="info-card tilt">
+                            <div class="card-glare" aria-hidden="true"></div>
+                            <span class="info-icon" aria-hidden="true">🛒</span>
+                            <p class="info-period">Août 2023 · CDD 4 semaines</p>
+                            <h3>Hôte de caisse &amp; mise en rayon</h3>
+                            <p class="info-org">Carrefour Market — Vannes</p>
+                            <p>Accueil de la clientèle, gestion des caisses et mise en rayon : compétences relationnelles et commerciales.</p>
+                        </article>
+                        <article class="info-card tilt">
+                            <div class="card-glare" aria-hidden="true"></div>
+                            <span class="info-icon" aria-hidden="true">🚧</span>
+                            <p class="info-period">Juillet 2023 · 1 mois</p>
+                            <h3>Pose de canalisations</h3>
+                            <p class="info-org">Intérim Proman — Vannes</p>
+                            <p>Travaux publics pour une entreprise de BTP : technique et travail en équipe.</p>
+                        </article>
+                    </div>
+                </div>
+
+                <div role="tabpanel" id="panel-formation" aria-labelledby="tab-formation" class="tab-panel" hidden>
+                    <div class="info-grid">
+                        <article class="info-card tilt">
+                            <div class="card-glare" aria-hidden="true"></div>
+                            <span class="info-icon" aria-hidden="true">🚀</span>
+                            <p class="info-period">Depuis septembre 2025</p>
+                            <h3>BTS SIO — option SISR</h3>
+                            <p class="info-org">École AFTEC — Rennes</p>
+                            <p>Poursuite de la formation en systèmes, réseaux et sécurité, avec une alternance recherchée pour septembre 2026.</p>
+                        </article>
+                        <article class="info-card tilt">
+                            <div class="card-glare" aria-hidden="true"></div>
+                            <span class="info-icon" aria-hidden="true">🎓</span>
+                            <p class="info-period">À partir de septembre 2023</p>
+                            <h3>BTS SIO — Services Informatiques aux Organisations</h3>
+                            <p class="info-org">Lycée Pôle Sup de La Salle, Groupe St Jean — Rennes</p>
+                            <p><strong>Option SISR</strong> : Solutions d'Infrastructure, Systèmes et Réseaux. Administration système, réseaux et sécurité.</p>
+                        </article>
+                        <article class="info-card tilt">
+                            <div class="card-glare" aria-hidden="true"></div>
+                            <span class="info-icon" aria-hidden="true">🏫</span>
+                            <p class="info-period">Septembre 2020 – juin 2023</p>
+                            <h3>Bac pro Systèmes Numériques</h3>
+                            <p class="info-org">Lycée St Joseph — Vannes</p>
+                            <p><strong>Option ARED</strong> : Audiovisuels, Réseau et Équipement Domestiques. Électronique, réseaux et systèmes numériques.</p>
+                        </article>
+                        <article class="info-card tilt">
+                            <div class="card-glare" aria-hidden="true"></div>
+                            <span class="info-icon" aria-hidden="true">🏆</span>
+                            <p class="info-period">Juin 2020</p>
+                            <h3>Brevet des collèges</h3>
+                            <p class="info-org">Collège Jules Simon — Vannes</p>
+                            <p><strong>Mention Très Bien.</strong></p>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Compétences -->
+        <section id="skills" class="section section-alt">
+            <div class="container">
+                <header class="section-head reveal">
+                    <p class="eyebrow">04 · Compétences</p>
+                    <h2>Compétences techniques</h2>
+                    <p class="section-lead">Mon écosystème technique en sphère 3D : survolez-la pour la piloter, cliquez sur une techno pour voir où je l'ai utilisée.</p>
+                </header>
+                <div class="skills-layout">
+                    <div class="tag-sphere-wrap reveal">
+                        <div class="tag-sphere" id="tag-sphere" role="list" aria-label="Technologies maîtrisées"></div>
+                        <p class="sphere-info" id="sphere-info" aria-live="polite">Sélectionnez une technologie.</p>
+                    </div>
+                    <div class="skills-grid">
+                        <article class="skill-card reveal">
+                            <h3><span aria-hidden="true">🖥️</span> Systèmes &amp; virtualisation</h3>
+                            <ul><li>Windows 10/11 · masterisation</li><li>Linux · administration</li><li>Windows Server</li><li>VMware vSphere, machines virtuelles</li></ul>
+                        </article>
+                        <article class="skill-card reveal">
+                            <h3><span aria-hidden="true">🌐</span> Réseaux &amp; infrastructure</h3>
+                            <ul><li>LAN, WAN, Wi-Fi, VPN</li><li>Protocoles IP, adressage</li><li>Cisco Packet Tracer</li><li>Baies de brassage</li></ul>
+                        </article>
+                        <article class="skill-card reveal">
+                            <h3><span aria-hidden="true">🐳</span> DevOps &amp; automatisation</h3>
+                            <ul><li>Docker · stacks multi-conteneurs</li><li>Ansible</li><li>GitLab, Git, intégration continue</li><li>Méthodologie Agile</li></ul>
+                        </article>
+                        <article class="skill-card reveal">
+                            <h3><span aria-hidden="true">📡</span> Supervision &amp; outils</h3>
+                            <ul><li>Centreon · supervision</li><li>GLPI · ticketing</li><li>MobaXterm, SSH</li><li>Nextcloud, SCCM</li></ul>
+                        </article>
+                        <article class="skill-card reveal">
+                            <h3><span aria-hidden="true">🔩</span> Hardware</h3>
+                            <ul><li>Montage complet d'unités centrales</li><li>Cartes mères, RAM, alimentations</li><li>Disques durs et SSD, clonage</li><li>Diagnostic et réparation</li></ul>
+                        </article>
+                        <article class="skill-card reveal">
+                            <h3><span aria-hidden="true">📋</span> Support &amp; documentation</h3>
+                            <ul><li>Support et formation des utilisateurs</li><li>Documentation technique</li><li>Gestion des incidents</li><li>Transmission de consignes</li></ul>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rapports -->
+        <section id="reports" class="section">
+            <div class="container">
+                <header class="section-head reveal">
+                    <p class="eyebrow">05 · Rapports</p>
+                    <h2>Rapports de stage</h2>
+                    <p class="section-lead">Chaque dossier s'ouvre au survol. Lisez un rapport directement ici ou téléchargez-le.</p>
+                </header>
+                <div class="reports-grid" id="reports-grid"></div>
+                <div class="reports-all reveal">
+                    <div>
+                        <h3>Collection complète · 2021 – 2025</h3>
+                        <p class="muted">Mon évolution en 5 ans : de l'assemblage hardware au DevOps, en passant par l'administration système et un projet international.</p>
+                    </div>
+                    <div class="reports-all-actions">
+                        <button type="button" class="btn btn-ghost" data-action="report-all-view">Tout lire</button>
+                        <button type="button" class="btn btn-primary" data-action="report-all-download">Tout télécharger</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" class="section section-alt contact">
+            <div class="container">
+                <header class="section-head reveal">
+                    <p class="eyebrow">06 · Contact</p>
+                    <h2>Travaillons ensemble</h2>
+                </header>
+                <div class="contact-grid">
+                    <div class="contact-info reveal">
+                        <p class="contact-pitch"><strong>Recherche active :</strong> contrat d'apprentissage d'un an à partir de <strong>septembre 2026</strong>, en administration systèmes et réseaux.</p>
+                        <div class="email-box">
+                            <a href="mailto:romainbonvalet43@gmail.com" class="email-link">romainbonvalet43@gmail.com</a>
+                            <button type="button" class="btn btn-mono btn-sm" id="copy-email" aria-label="Copier l'adresse e-mail">Copier</button>
+                        </div>
+                        <ul class="contact-facts">
+                            <li><span aria-hidden="true">⛟</span> Permis B, véhiculé</li>
+                            <li><span aria-hidden="true">⌘</span> Français (natif), anglais (intermédiaire)</li>
+                            <li><span aria-hidden="true">⌖</span> Rennes · Vannes · Bretagne</li>
+                        </ul>
+                        <p class="muted">N'hésitez pas à me contacter pour toute opportunité correspondant à mon profil.</p>
+                    </div>
+                    <form class="contact-form reveal" id="contact-form" novalidate>
+                        <div class="form-row">
+                            <div class="field">
+                                <input type="text" id="name" name="name" placeholder=" " required autocomplete="name">
+                                <label for="name">Nom complet</label>
+                            </div>
+                            <div class="field">
+                                <input type="email" id="email" name="email" placeholder=" " required autocomplete="email">
+                                <label for="email">E-mail</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <input type="text" id="company" name="company" placeholder=" " autocomplete="organization">
+                            <label for="company">Entreprise (facultatif)</label>
+                        </div>
+                        <div class="field">
+                            <input type="text" id="subject" name="subject" placeholder=" " required value="Proposition d'alternance">
+                            <label for="subject">Sujet</label>
+                        </div>
+                        <div class="field">
+                            <textarea id="message" name="message" rows="5" placeholder=" " required></textarea>
+                            <label for="message">Message</label>
+                        </div>
+                        <p class="form-error" id="form-error" role="alert"></p>
+                        <button type="submit" class="btn btn-primary btn-block">Envoyer le message</button>
+                        <p class="form-note">Le bouton ouvre votre messagerie avec le message prérempli.</p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <p>&copy; <span id="year">2026</span> Romain Bonvalet · Portfolio BTS SIO SISR</p>
+            <p class="muted">Astuce : appuyez sur <kbd>`</kbd> pour ouvrir le terminal.</p>
+        </div>
+    </footer>
+
+    <!-- Terminal (easter egg) -->
+    <button type="button" class="term-fab" id="term-fab" aria-label="Ouvrir le terminal" title="Terminal (touche `)">&gt;_</button>
+    <div class="term" id="term" role="dialog" aria-modal="true" aria-label="Terminal interactif" hidden>
+        <div class="term-bar">
+            <span class="term-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span>romain@sisr: ~</span>
+            <button type="button" class="term-close" id="term-close" aria-label="Fermer le terminal">✕</button>
+        </div>
+        <div class="term-body" id="term-body" aria-live="polite"></div>
+        <form class="term-input" id="term-form">
+            <label for="term-in" class="prompt">romain@sisr:~$</label>
+            <input id="term-in" type="text" autocomplete="off" autocapitalize="off" spellcheck="false">
+        </form>
+    </div>
+
+    <!-- Modale de lecture -->
+    <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+        <div class="modal-backdrop" data-close></div>
+        <div class="modal-panel">
+            <header class="modal-head">
+                <div>
+                    <p class="eyebrow" id="modal-eyebrow"></p>
+                    <h2 id="modal-title"></h2>
+                </div>
+                <button type="button" class="modal-close" data-close aria-label="Fermer">✕</button>
+            </header>
+            <div class="modal-body" id="modal-body"></div>
+            <footer class="modal-foot" id="modal-foot"></footer>
+        </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
