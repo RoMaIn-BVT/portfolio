@@ -1,39 +1,27 @@
 # Portfolio — Romain Bonvalet
 
-Portfolio de Romain Bonvalet, étudiant en **BTS SIO option SISR**, à la recherche d'un contrat d'apprentissage d'un an à partir de **septembre 2026**.
+Portfolio de Romain Bonvalet : 3e année **Administrateur Système DevOps** à l'ENI Rennes, alternance chez **Thales Rennes** à partir d'octobre 2026 (BTS SIO SISR).
 
-## Fonctionnalités
+Le site tient dans un seul fichier, `index.html`. Three.js 0.160 est chargé depuis jsDelivr pour les scènes 3D ; sans WebGL ou si le CDN est injoignable, le site reste complet (topologie et carte en version 2D).
 
-- **Accueil en 3D** (Three.js) : une infrastructure réseau où des paquets de données circulent de nœud en nœud, avec des serveurs, un cœur en icosaèdre et une parallaxe qui suit la souris.
-- **Projet phare en 3D** : la stack Docker phpIPAM (phpipam, cron, mariadb, powerdns). Les conteneurs se déploient sur l'hôte, on peut faire pivoter la scène et survoler chaque conteneur.
-- **Sphère 3D des compétences** : on clique sur une technologie pour voir où elle a été utilisée.
-- **Rapports de stage** en dossiers 3D, lisibles dans une fenêtre intégrée, imprimables et téléchargeables.
-- **Terminal interactif** (touche `` ` `` ou bouton `>_`) : `help`, `whoami`, `docker ps`, `ping`, `neofetch`…
-- Cartes inclinables en 3D, frise chronologique animée, onglets accessibles au clavier, formulaire de contact qui ouvre la messagerie.
-- Responsive (mobile → grand écran), prise en compte de `prefers-reduced-motion`, rendu de secours sans WebGL, animations 3D en pause hors de l'écran.
+## Effets 3D
 
-## Structure
+- **Accueil** : réseau d'infrastructure en WebGL (nœuds, serveurs, paquets de données) derrière le terminal, avec parallaxe à la souris. Le relief du nom s'oriente selon le curseur.
+- **Projet E4 (CHE)** : maquette 3D interactive de l'infrastructure. Internet, FortiGate, cœur de réseau, 6 VLANs et salle serveurs (AD/DNS/DHCP, GLPI, Zabbix, impression, Veeam). Déploiement animé, survol des équipements, simulation d'attaques bloquées par le pare-feu avec journal en direct.
+- **Carte de Rennes** : ville 3D stylisée avec la Vilaine, la rocade, les axes et des repères lumineux (domicile, ENI, Thales). Vol de caméra vers chaque lieu et distances calculées.
+- **Titres de section** : lettres qui pivotent en 3D à l'apparition, relief éclairé par la souris.
+- **Compétences** : sphère 3D de 33 technologies ; un clic filtre les compétences.
+- **Frise** : effet coverflow 3D au défilement.
+- Terminal : nouvelle commande `attaque`.
 
-```
-index.html            page principale
-css/style.css         styles
-js/main.js            interface (navigation, sphère, terminal, modale, formulaire…)
-js/content.js         contenu des rapports et du CV, documents imprimables
-js/scene-network.js   scène 3D de l'accueil
-js/scene-docker.js    scène 3D de la stack Docker
-js/glow.js            matériau lumineux partagé et boucle de rendu
-js/vendor/            Three.js 0.160 (MIT), embarqué, sans CDN
-```
+Thème clair et sombre, responsive, `prefers-reduced-motion` respecté, rendu 3D en pause hors de l'écran.
+
+## Fichiers attendus à côté de `index.html`
+
+Le site renvoie vers ces documents, à placer dans le même dossier : `CV Romain BONVALET 22.09.2025.pdf`, `Romain BONVALET E5.pdf`, les rapports de stage PDF, et les dossiers `Cisco VLAN/`, `Gitlab/`, `GLPI/`, `Centreon/`, `Masterisation Windows 10-11/`.
 
 ## Lancer en local
 
-Les modules JavaScript doivent être servis en HTTP : ouvrir `index.html` directement depuis le disque ne fonctionne pas.
-
 ```bash
-python3 -m http.server 8000
-# puis ouvrir http://localhost:8000
+python3 -m http.server 8000   # puis http://localhost:8000
 ```
-
-## Mise en ligne avec GitHub Pages
-
-Dans *Settings → Pages*, choisir la branche `main` et le dossier `/ (root)`.
