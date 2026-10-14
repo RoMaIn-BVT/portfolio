@@ -16,12 +16,12 @@ Le site tient dans un seul fichier, `index.html`. Three.js 0.160 est chargé dep
 
 Thème clair et sombre, responsive, `prefers-reduced-motion` respecté, rendu 3D en pause hors de l'écran.
 
-## Fichiers attendus à côté de `index.html`
-
-Le site renvoie vers ces documents, à placer dans le même dossier : `CV Romain BONVALET 22.09.2025.pdf`, `Romain BONVALET E5.pdf`, les rapports de stage PDF, et les dossiers `Cisco VLAN/`, `Gitlab/`, `GLPI/`, `Centreon/`, `Masterisation Windows 10-11/`.
-
 ## Lancer en local
 
 ```bash
 python3 -m http.server 8000   # puis http://localhost:8000
 ```
+
+## Documents (`documents/`)
+
+CV, tableau E5 (PDF + Excel), rapports de stage (2021 → 2025) et procédures (GLPI, GitLab, mission Helpdesk). Les versions publiées masquent l'adresse postale, le numéro de téléphone et les mots de passe présents dans les originaux.
