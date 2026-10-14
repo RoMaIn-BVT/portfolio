@@ -15,7 +15,10 @@ import urllib.request
 
 SITE = os.environ.get("GOATCOUNTER_SITE", "").strip()
 TOKEN = os.environ.get("GOATCOUNTER_TOKEN", "").strip()
-START_ALL = "2024-01-01"
+START_ALL = dt.date(2024, 1, 1)
+PERIODS = {"7": 7, "30": 30, "90": 90, "all": None}
+TOPS = {"referrers": "toprefs", "countries": "locations", "sizes": "sizes",
+        "browsers": "browsers", "systems": "systems"}
 
 
 def api(path, **params):
@@ -28,11 +31,11 @@ def api(path, **params):
 
 
 def hits(start, end):
-    return api("stats/hits", start=start, end=end, limit=100).get("hits", [])
+    return api("stats/hits", start=start.isoformat(), end=end.isoformat(), limit=100).get("hits", [])
 
 
 def top(page, start, end):
-    rows = api(f"stats/{page}", start=start, end=end, limit=10).get("stats", [])
+    rows = api(f"stats/{page}", start=start.isoformat(), end=end.isoformat(), limit=10).get("stats", [])
     return [{"name": r.get("name") or "", "count": r.get("count", 0)} for r in rows]
 
 
@@ -42,48 +45,70 @@ def events(all_hits, prefix):
     return sorted(rows, key=lambda r: -r["count"])
 
 
+def pageviews(all_hits):
+    return [h for h in all_hits if not h.get("event")]
+
+
+def per_day(all_hits):
+    days = {}
+    for h in pageviews(all_hits):
+        for s in h.get("stats", []):
+            days[s["day"]] = days.get(s["day"], 0) + s.get("daily", 0)
+    return days
+
+
+def period(start, end, prev_start=None):
+    h = hits(start, end)
+    hours, weekdays = [0] * 24, [0] * 7
+    for p in pageviews(h):
+        for s in p.get("stats", []):
+            for i, n in enumerate((s.get("hourly") or [])[:24]):
+                hours[i] += n
+            weekdays[dt.date.fromisoformat(s["day"]).weekday()] += s.get("daily", 0)
+    data = {
+        "visitors": sum(p.get("count", 0) for p in pageviews(h)),
+        "previous": None,
+        "hours": hours,
+        "weekdays": weekdays,  # lundi = 0
+        "duration": events(h, "duree/"),
+        "sections": events(h, "section/"),
+        "clicks": events(h, "clic/"),
+    }
+    if prev_start:
+        prev = hits(prev_start, start - dt.timedelta(days=1))
+        data["previous"] = sum(p.get("count", 0) for p in pageviews(prev))
+    for key, page in TOPS.items():
+        data[key] = top(page, start, end)
+    return data
+
+
 def main():
     if not SITE or not TOKEN:
         print("GOATCOUNTER_SITE ou GOATCOUNTER_TOKEN absent : rien à mettre à jour.")
         return 0
 
     today = dt.datetime.now(dt.timezone.utc).date()
-    end = today.isoformat()
-    start30 = (today - dt.timedelta(days=29)).isoformat()
+    periods = {}
+    for key, days in PERIODS.items():
+        if days is None:
+            periods[key] = period(START_ALL, today)
+        else:
+            start = today - dt.timedelta(days=days - 1)
+            periods[key] = period(start, today, start - dt.timedelta(days=days))
 
-    recent = hits(start30, end)
-    per_day = {}
-    for h in recent:
-        if h.get("event"):
-            continue
-        for s in h.get("stats", []):
-            per_day[s["day"]] = per_day.get(s["day"], 0) + s.get("daily", 0)
-    daily = [{"day": (today - dt.timedelta(days=i)).isoformat(),
-              "count": per_day.get((today - dt.timedelta(days=i)).isoformat(), 0)}
-             for i in range(29, -1, -1)]
+    days90 = per_day(hits(today - dt.timedelta(days=89), today))
+    daily = [{"day": d.isoformat(), "count": days90.get(d.isoformat(), 0)}
+             for d in (today - dt.timedelta(days=i) for i in range(89, -1, -1))]
 
-    everything = hits(START_ALL, end)
     data = {
         "updated": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
-        "visitors": {
-            "today": daily[-1]["count"],
-            "week": sum(d["count"] for d in daily[-7:]),
-            "month": sum(d["count"] for d in daily),
-            "total": sum(h.get("count", 0) for h in everything if not h.get("event")),
-        },
+        "today": daily[-1]["count"],
         "daily": daily,
-        "duration": events(everything, "duree/"),
-        "sections": events(everything, "section/"),
-        "clicks": events(everything, "clic/"),
-        "referrers": top("toprefs", START_ALL, end),
-        "countries": top("locations", START_ALL, end),
-        "sizes": top("sizes", START_ALL, end),
-        "browsers": top("browsers", START_ALL, end),
-        "systems": top("systems", START_ALL, end),
+        "periods": periods,
     }
     with open("stats.json", "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=1)
-    print(f"stats.json mis à jour : {data['visitors']}")
+    print("stats.json mis à jour : " + ", ".join(f"{k}={v['visitors']}" for k, v in periods.items()))
     return 0
 
 

@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Statistiques — Portfolio de Romain Bonvalet</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+    <script>
+        // Même thème que le portfolio (sombre par défaut), partagé via le stockage du navigateur
+        try { document.documentElement.dataset.theme = (localStorage.getItem('theme') || 'dark') === 'dark' ? 'dark' : 'light'; } catch (e) { }
+    </script>
+    <style>
+        :root {
+            color-scheme: light;
+            --page: #f8fafc;
+            --surface: #ffffff;
+            --ink: #0f172a;
+            --ink-2: #475569;
+            --muted: #64748b;
+            --grid: #e2e8f0;
+            --axis: #cbd5e1;
+            --border: #e2e8f0;
+            --accent: #2563eb;
+            --accent-wash: rgba(37, 99, 235, 0.10);
+            --track: #e0eafc;
+            --good: #047857;
+            --bad: #dc2626;
+            --shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 16px rgba(15, 23, 42, 0.05);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:where(:not([data-theme="light"])) {
+                color-scheme: dark;
+                --page: #020617;
+                --surface: #0f172a;
+                --ink: #f8fafc;
+                --ink-2: #cbd5e1;
+                --muted: #94a3b8;
+                --grid: #1e293b;
+                --axis: #334155;
+                --border: rgba(255, 255, 255, 0.10);
+                --accent: #3b82f6;
+                --accent-wash: rgba(59, 130, 246, 0.16);
+                --track: #1e293b;
+                --good: #10b981;
+                --bad: #f87171;
+                --shadow: none;
+            }
+        }
+
+        :root[data-theme="dark"] {
+            color-scheme: dark;
+            --page: #020617;
+            --surface: #0f172a;
+            --ink: #f8fafc;
+            --ink-2: #cbd5e1;
+            --muted: #94a3b8;
+            --grid: #1e293b;
+            --axis: #334155;
+            --border: rgba(255, 255, 255, 0.10);
+            --accent: #3b82f6;
+            --accent-wash: rgba(59, 130, 246, 0.16);
+            --track: #1e293b;
+            --good: #10b981;
+            --bad: #f87171;
+            --shadow: none;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+            background: var(--page);
+            color: var(--ink);
+            line-height: 1.5;
+        }
+
+        .wrap {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 32px 16px 48px;
+        }
+
+        header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        header h1, .card h2 { font-family: "Outfit", "Inter", system-ui, sans-serif; }
+        header h1 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.01em; }
+        header p { color: var(--ink-2); font-size: 0.9rem; }
+
+        a { color: var(--accent); }
+
+        .back {
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 8px 14px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: var(--surface);
+        }
+
+        .filters {
+            display: inline-flex;
+            gap: 4px;
+            padding: 4px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 24px;
+        }
+
+        .filters button {
+            font: inherit;
+            font-size: 0.875rem;
+            border: 0;
+            background: transparent;
+            color: var(--ink-2);
+            padding: 6px 14px;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        .filters button:hover { background: var(--accent-wash); }
+
+        .filters button[aria-pressed="true"] {
+            background: var(--accent);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .notice {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            color: var(--ink-2);
+            font-size: 0.925rem;
+        }
+
+        .notice strong { color: var(--ink); }
+
+        .grid { display: grid; gap: 16px; }
+        .kpis { grid-template-columns: 1.6fr repeat(5, 1fr); margin-bottom: 16px; }
+        .two { grid-template-columns: 1fr 1fr; margin-top: 16px; }
+        .cards { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); margin-top: 16px; }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            min-width: 0;
+        }
+
+        .card h2 { font-size: 0.95rem; font-weight: 600; }
+        .card .sub { font-size: 0.8rem; color: var(--muted); margin-bottom: 14px; }
+
+        .tile .label { font-size: 0.8rem; color: var(--ink-2); }
+        .tile .value { font-size: 1.75rem; font-weight: 650; line-height: 1.2; margin-top: 4px; }
+        .tile.hero .value { font-size: 3.25rem; letter-spacing: -0.02em; }
+
+        .delta { font-size: 0.8rem; font-weight: 600; margin-top: 4px; }
+        .delta.up { color: var(--good); }
+        .delta.down { color: var(--bad); }
+        .delta .vs { color: var(--muted); font-weight: 400; }
+
+        /* Courbe journalière */
+        .chart { position: relative; }
+        .chart svg { display: block; width: 100%; overflow: visible; }
+        .chart svg:focus { outline: none; }
+        .chart svg:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
+        .tick { font-size: 11px; fill: var(--muted); font-variant-numeric: tabular-nums; }
+
+        details { margin-top: 12px; font-size: 0.85rem; color: var(--ink-2); }
+        summary { cursor: pointer; }
+        .table-scroll { max-height: 260px; overflow: auto; margin-top: 8px; }
+        table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+        th, td { text-align: left; padding: 4px 8px; border-bottom: 1px solid var(--grid); }
+        td:last-child, th:last-child { text-align: right; }
+
+        /* Colonnes (heures, jours) */
+        .cols {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 2px;
+            height: 140px;
+            border-bottom: 1px solid var(--axis);
+        }
+
+        .col {
+            flex: 1;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            height: 100%;
+            cursor: default;
+        }
+
+        .col i {
+            display: block;
+            width: 100%;
+            max-width: 24px;
+            min-height: 2px;
+            background: var(--accent);
+            border-radius: 4px 4px 0 0;
+            transition: opacity 0.15s;
+        }
+
+        .col:hover i, .col:focus-visible i { opacity: 0.7; }
+        .col:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+        .col-labels { display: flex; justify-content: space-between; gap: 2px; margin-top: 6px; }
+        .col-labels span { flex: 1; min-width: 0; text-align: center; font-size: 11px; color: var(--muted); white-space: nowrap; overflow: visible; }
+
+        /* Barres horizontales */
+        .row { margin-bottom: 12px; cursor: default; }
+        .row:last-child { margin-bottom: 0; }
+        .row .line { display: flex; justify-content: space-between; gap: 12px; font-size: 0.875rem; margin-bottom: 4px; }
+        .row .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink-2); }
+        .row .num { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+        .row .num small { color: var(--muted); font-weight: 400; margin-left: 4px; }
+        .row .bar { height: 8px; background: var(--track); border-radius: 0 4px 4px 0; }
+        .row .bar i { display: block; height: 100%; min-width: 2px; background: var(--accent); border-radius: 0 4px 4px 0; }
+        .empty { color: var(--muted); font-size: 0.875rem; }
+
+        #tooltip {
+            position: fixed;
+            pointer-events: none;
+            z-index: 10;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 10px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+            font-size: 0.8rem;
+            color: var(--ink-2);
+            opacity: 0;
+            transition: opacity 0.1s;
+        }
+
+        #tooltip strong { display: block; color: var(--ink); font-size: 0.95rem; }
+
+        footer {
+            margin-top: 32px;
+            color: var(--muted);
+            font-size: 0.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 16px;
+            justify-content: space-between;
+        }
+
+        footer button {
+            font: inherit;
+            color: var(--accent);
+            background: none;
+            border: 0;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .loading .grid { opacity: 0.5; }
+
+        @media (max-width: 1000px) {
+            .kpis { grid-template-columns: repeat(3, 1fr); }
+            .tile.hero { grid-column: 1 / -1; }
+        }
+
+        @media (max-width: 700px) {
+            .kpis { grid-template-columns: repeat(2, 1fr); }
+            .kpis .tile:last-child { grid-column: 1 / -1; }
+            .two { grid-template-columns: 1fr; }
+            .tile.hero .value { font-size: 2.75rem; }
+            .filters { display: flex; }
+            .filters button { flex: 1; padding: 6px 4px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap loading" id="app">
+        <header>
+            <div>
+                <h1>📊 Statistiques du portfolio</h1>
+                <p id="updated">Chargement…</p>
+            </div>
+            <a class="back" href="../">Voir le portfolio →</a>
+        </header>
+
+        <div class="filters" role="group" aria-label="Période">
+            <button data-period="7" aria-pressed="false">7 jours</button>
+            <button data-period="30" aria-pressed="true">30 jours</button>
+            <button data-period="90" aria-pressed="false">90 jours</button>
+            <button data-period="all" aria-pressed="false">Tout</button>
+        </div>
+
+        <div class="notice" id="notice" hidden></div>
+
+        <section class="grid kpis" id="kpis" aria-label="Chiffres clés"></section>
+
+        <section class="card">
+            <h2>Visiteurs par jour</h2>
+            <p class="sub" id="daily-sub"></p>
+            <div class="chart" id="daily"></div>
+            <details>
+                <summary>Voir les données en tableau</summary>
+                <div class="table-scroll"><table id="daily-table"></table></div>
+            </details>
+        </section>
+
+        <section class="grid two">
+            <div class="card">
+                <h2>Heures de visite</h2>
+                <p class="sub">Visiteurs selon l'heure d'arrivée</p>
+                <div id="hours"></div>
+            </div>
+            <div class="card">
+                <h2>Jours de la semaine</h2>
+                <p class="sub">Visiteurs selon le jour</p>
+                <div id="weekdays"></div>
+            </div>
+        </section>
+
+        <section class="grid cards" id="cards"></section>
+
+        <footer>
+            <span>Mesure sans cookie via GoatCounter · aucune donnée personnelle collectée · données actualisées chaque heure</span>
+            <span id="self"></span>
+        </footer>
+    </div>
+
+    <div id="tooltip" role="status" aria-live="polite"></div>
+
+    <script>
+        (function () {
+            // Vos propres visites ne sont pas comptées : ce site partage le stockage du portfolio
+            const IGNORE_KEY = 'stats-ignore';
+            function storage(fn) { try { return fn(); } catch (e) { return null; } }
+            if (storage(() => localStorage.getItem(IGNORE_KEY)) === null) storage(() => localStorage.setItem(IGNORE_KEY, '1'));
+
+            const PERIOD_LABEL = { '7': '7 jours', '30': '30 jours', '90': '90 jours', all: 'depuis le début' };
+            const DURATIONS = [
+                ['0-10s', 'Moins de 10 s', 5], ['10-30s', '10 à 30 s', 20], ['30-60s', '30 s à 1 min', 45],
+                ['1-3min', '1 à 3 min', 120], ['3-10min', '3 à 10 min', 390], ['10min+', 'Plus de 10 min', 900]
+            ];
+            const SECTIONS = [
+                ['home', 'Accueil'], ['about', 'À propos'], ['projects', 'Projets'], ['che', 'CHE'],
+                ['e5', 'Tableau E5'], ['experience', 'Stages'], ['other-exp', 'Autres expériences'],
+                ['skills', 'Compétences'], ['formation', 'Formation'], ['veille', 'Veille'], ['contact', 'Contact']
+            ];
+            const WEEKDAYS = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+            const SIZES = { phone: 'Téléphone', largephone: 'Grand téléphone', tablet: 'Tablette', desktop: 'Ordinateur', desktophd: 'Ordinateur HD', unknown: 'Inconnu' };
+
+            const app = document.getElementById('app');
+            const tip = document.getElementById('tooltip');
+            let data = null;
+            let period = storage(() => localStorage.getItem('stats-period')) || '30';
+
+            // ---------- utilitaires ----------
+            function el(tag, cls, text) {
+                const n = document.createElement(tag);
+                if (cls) n.className = cls;
+                if (text !== undefined && text !== null) n.textContent = String(text); // jamais innerHTML : données externes
+                return n;
+            }
+            function svg(tag, attrs) {
+                const n = document.createElementNS('http://www.w3.org/2000/svg', tag);
+                for (const k in attrs) n.setAttribute(k, attrs[k]);
+                return n;
+            }
+            const fmt = n => n === null || n === undefined ? '—' : Number(n).toLocaleString('fr-FR');
+            const pct = (a, b) => b ? Math.round(a / b * 100) : 0;
+            function fmtDuration(sec) {
+                if (!sec) return '—';
+                if (sec < 60) return Math.round(sec) + ' s';
+                const m = Math.floor(sec / 60), s = Math.round(sec % 60);
+                return m + ' min ' + String(s).padStart(2, '0');
+            }
+            const dayLabel = (iso, opts) => new Date(iso + 'T12:00:00').toLocaleDateString('fr-FR', opts || { day: 'numeric', month: 'short' });
+            function niceMax(v) {
+                if (v <= 4) return 4;
+                const p = Math.pow(10, Math.floor(Math.log10(v)));
+                return [1, 2, 2.5, 5, 10].map(m => m * p).find(m => m >= v);
+            }
+
+            // ---------- infobulle ----------
+            function showTip(value, label, x, y) {
+                tip.replaceChildren(el('strong', '', value), el('span', '', label));
+                tip.style.opacity = '1';
+                const r = tip.getBoundingClientRect();
+                tip.style.left = Math.min(Math.max(8, x - r.width / 2), innerWidth - r.width - 8) + 'px';
+                tip.style.top = Math.max(8, y - r.height - 12) + 'px';
+            }
+            function hideTip() { tip.style.opacity = '0'; }
+            function hoverable(node, value, label) {
+                node.tabIndex = 0;
+                node.setAttribute('aria-label', label + ' : ' + value);
+                const show = e => {
+                    const r = node.getBoundingClientRect();
+                    showTip(value, label, e && e.clientX !== undefined ? e.clientX : r.left + r.width / 2, r.top);
+                };
+                node.addEventListener('pointermove', show);
+                node.addEventListener('focus', () => show());
+                node.addEventListener('pointerleave', hideTip);
+                node.addEventListener('blur', hideTip);
+            }
+
+            // ---------- tuiles ----------
+            function tile(label, value, opts) {
+                opts = opts || {};
+                const t = el('div', 'card tile' + (opts.hero ? ' hero' : ''));
+                t.appendChild(el('div', 'label', label));
+                t.appendChild(el('div', 'value', value));
+                if (opts.delta) t.appendChild(opts.delta);
+                return t;
+            }
+            function delta(cur, prev, label) {
+                if (prev === null || prev === undefined || (!prev && !cur)) return null;
+                const d = el('div', 'delta');
+                if (!prev) {
+                    d.classList.add('up');
+                    d.append('▲ nouveau ');
+                } else {
+                    const change = Math.round((cur - prev) / prev * 100);
+                    d.classList.add(change >= 0 ? 'up' : 'down');
+                    d.append((change >= 0 ? '▲ +' : '▼ ') + change + ' % ');
+                }
+                d.appendChild(el('span', 'vs', 'vs ' + label));
+                return d;
+            }
+
+            // ---------- courbe journalière (aire + réticule) ----------
+            function lineChart(host, rows) {
+                host.replaceChildren();
+                const W = Math.max(host.clientWidth, 280), H = 220;
+                const m = { l: 36, r: 12, t: 12, b: 26 };
+                const iw = W - m.l - m.r, ih = H - m.t - m.b;
+                const max = niceMax(Math.max(...rows.map(r => r.count), 1));
+                const x = i => m.l + (rows.length === 1 ? iw / 2 : i / (rows.length - 1) * iw);
+                const y = v => m.t + ih - v / max * ih;
+                const root = svg('svg', { viewBox: `0 0 ${W} ${H}`, height: H, tabindex: 0, role: 'img',
+                    'aria-label': 'Courbe des visiteurs par jour ; flèches gauche/droite pour parcourir' });
+
+                for (let k = 0; k <= 4; k++) {
+                    const v = max / 4 * k, yy = y(v);
+                    root.appendChild(svg('line', { x1: m.l, x2: W - m.r, y1: yy, y2: yy,
+                        stroke: k === 0 ? 'var(--axis)' : 'var(--grid)', 'stroke-width': 1 }));
+                    const t = svg('text', { x: m.l - 8, y: yy + 4, 'text-anchor': 'end', class: 'tick' });
+                    t.textContent = Number.isInteger(v) ? fmt(v) : '';
+                    root.appendChild(t);
+                }
+                const ticks = rows.length > 1 ? [0, Math.floor((rows.length - 1) / 2), rows.length - 1] : [0];
+                ticks.forEach((i, n) => {
+                    const t = svg('text', { x: x(i), y: H - 6, class: 'tick',
+                        'text-anchor': n === 0 && ticks.length > 1 ? 'start' : n === ticks.length - 1 && ticks.length > 1 ? 'end' : 'middle' });
+                    t.textContent = dayLabel(rows[i].day);
+                    root.appendChild(t);
+                });
+
+                const pts = rows.map((r, i) => `${x(i).toFixed(1)},${y(r.count).toFixed(1)}`);
+                root.appendChild(svg('path', { d: `M${x(0)},${y(0)} L${pts.join(' L')} L${x(rows.length - 1)},${y(0)} Z`,
+                    fill: 'var(--accent-wash)' }));
+                root.appendChild(svg('path', { d: 'M' + pts.join(' L'), fill: 'none', stroke: 'var(--accent)',
+                    'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }));
+
+                const last = rows.length - 1;
+                root.appendChild(svg('circle', { cx: x(last), cy: y(rows[last].count), r: 4, fill: 'var(--accent)',
+                    stroke: 'var(--surface)', 'stroke-width': 2 }));
+
+                const cross = svg('line', { y1: m.t, y2: m.t + ih, stroke: 'var(--axis)', 'stroke-width': 1, opacity: 0 });
+                const dot = svg('circle', { r: 5, fill: 'var(--accent)', stroke: 'var(--surface)', 'stroke-width': 2, opacity: 0 });
+                root.append(cross, dot);
+                const hit = svg('rect', { x: m.l, y: m.t, width: iw, height: ih, fill: 'transparent' });
+                root.appendChild(hit);
+
+                let cur = last;
+                function focusAt(i) {
+                    cur = Math.max(0, Math.min(last, i));
+                    const cx = x(cur), cy = y(rows[cur].count);
+                    cross.setAttribute('x1', cx); cross.setAttribute('x2', cx); cross.setAttribute('opacity', 1);
+                    dot.setAttribute('cx', cx); dot.setAttribute('cy', cy); dot.setAttribute('opacity', 1);
+                    const box = root.getBoundingClientRect(), sx = box.width / W;
+                    const n = rows[cur].count;
+                    showTip(fmt(n) + ' visiteur' + (n > 1 ? 's' : ''), dayLabel(rows[cur].day, { weekday: 'long', day: 'numeric', month: 'long' }),
+                        box.left + cx * sx, box.top + cy * sx);
+                }
+                function clear() { cross.setAttribute('opacity', 0); dot.setAttribute('opacity', 0); hideTip(); }
+                hit.addEventListener('pointermove', e => {
+                    const box = root.getBoundingClientRect();
+                    const px = (e.clientX - box.left) * (W / box.width);
+                    focusAt(Math.round((px - m.l) / iw * last));
+                });
+                hit.addEventListener('pointerleave', clear);
+                root.addEventListener('focus', () => focusAt(cur));
+                root.addEventListener('blur', clear);
+                root.addEventListener('keydown', e => {
+                    if (e.key === 'ArrowLeft') { focusAt(cur - 1); e.preventDefault(); }
+                    if (e.key === 'ArrowRight') { focusAt(cur + 1); e.preventDefault(); }
+                });
+                host.appendChild(root);
+            }
+
+            // ---------- colonnes ----------
+            function columns(host, values, labels, axisLabels, unit) {
+                host.replaceChildren();
+                const max = Math.max(...values, 1);
+                const wrap = el('div', 'cols');
+                values.forEach((v, i) => {
+                    const c = el('div', 'col');
+                    const bar = el('i');
+                    bar.style.height = (v / max * 100) + '%';
+                    c.appendChild(bar);
+                    hoverable(c, fmt(v) + ' ' + unit, labels[i]);
+                    wrap.appendChild(c);
+                });
+                const lab = el('div', 'col-labels');
+                axisLabels.forEach(t => lab.appendChild(el('span', '', t)));
+                host.append(wrap, lab);
+            }
+
+            // ---------- barres horizontales ----------
+            function barCard(title, sub, rows, opts) {
+                opts = opts || {};
+                const c = el('div', 'card');
+                c.appendChild(el('h2', '', title));
+                c.appendChild(el('p', 'sub', sub));
+                const list = (rows || []).filter(r => opts.keepZero || r.count > 0);
+                if (!list.length) {
+                    c.appendChild(el('p', 'empty', 'Pas encore de données sur cette période'));
+                    return c;
+                }
+                const max = opts.of || Math.max(...list.map(r => r.count), 1);
+                list.slice(0, opts.limit || 8).forEach(r => {
+                    const row = el('div', 'row');
+                    const line = el('div', 'line');
+                    line.appendChild(el('span', 'name', r.label));
+                    const num = el('span', 'num', fmt(r.count));
+                    if (opts.of) num.appendChild(el('small', '', pct(r.count, opts.of) + ' %'));
+                    line.appendChild(num);
+                    const bar = el('div', 'bar');
+                    const fill = el('i');
+                    fill.style.width = Math.min(100, r.count / max * 100) + '%';
+                    bar.appendChild(fill);
+                    row.append(line, bar);
+                    hoverable(row, fmt(r.count) + (opts.of ? ' (' + pct(r.count, opts.of) + ' %)' : ''), r.label);
+                    c.appendChild(row);
+                });
+                return c;
+            }
+
+            const FILTERS = { all: 'tout', diploma: 'études', exp: 'stages', job: 'jobs' };
+            function clickLabel(name) {
+                const i = name.indexOf('/');
+                const kind = i < 0 ? name : name.slice(0, i), arg = i < 0 ? '' : name.slice(i + 1);
+                const pretty = arg.replace(/-/g, ' ');
+                switch (kind) {
+                    case 'cv': return 'Ouverture du CV';
+                    case 'document': return 'Document : ' + pretty;
+                    case 'stage': return 'Stage : ' + pretty;
+                    case 'thales': return 'Alternance Thales';
+                    case 'carte': return 'Carte de Rennes';
+                    case 'filtre': return 'Filtre formation : ' + (FILTERS[arg] || arg);
+                    case 'email': return 'Clic sur l’email';
+                    case 'formulaire': return 'Formulaire de contact';
+                    case 'lien': return 'Lien externe : ' + arg;
+                    default: return name;
+                }
+            }
+            const sum = (rows, name) => (rows || []).filter(r => r.name === name || r.name.startsWith(name + '/')).reduce((a, r) => a + r.count, 0);
+
+            // ---------- rendu ----------
+            function render() {
+                document.querySelectorAll('.filters button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.period === period)));
+                const p = (data.periods || {})[period] || {};
+                const visitors = p.visitors || 0;
+                const label = PERIOD_LABEL[period];
+
+                document.getElementById('updated').textContent = data.updated
+                    ? 'Mis à jour le ' + new Date(data.updated).toLocaleString('fr-FR', { dateStyle: 'long', timeStyle: 'short' }) + ' · actualisé chaque heure'
+                    : 'En attente des premières données';
+
+                const notice = document.getElementById('notice');
+                notice.hidden = !!data.updated;
+                if (!data.updated) {
+                    notice.replaceChildren(el('strong', '', 'Aucune donnée pour l’instant. '),
+                        'Les chiffres apparaîtront après la configuration de GoatCounter et la première exécution du workflow « Statistiques du portfolio » (voir le README du dépôt).');
+                }
+
+                // Durée
+                const dur = new Map((p.duration || []).map(r => [r.name, r.count]));
+                const durTotal = DURATIONS.reduce((a, d) => a + (dur.get(d[0]) || 0), 0);
+                const avg = durTotal ? DURATIONS.reduce((a, d) => a + d[2] * (dur.get(d[0]) || 0), 0) / durTotal : 0;
+                const engaged = DURATIONS.slice(2).reduce((a, d) => a + (dur.get(d[0]) || 0), 0);
+
+                const kpis = document.getElementById('kpis');
+                kpis.replaceChildren(
+                    tile('Visiteurs · ' + label, fmt(visitors), { hero: true, delta: delta(visitors, p.previous, label + ' précédents') }),
+                    tile('Aujourd’hui', fmt(data.today)),
+                    tile('Temps moyen', fmtDuration(avg)),
+                    tile('Restés plus de 30 s', durTotal ? pct(engaged, durTotal) + ' %' : '—'),
+                    tile('Ouvertures du CV', fmt(sum(p.clicks, 'cv'))),
+                    tile('Messages (formulaire)', fmt(sum(p.clicks, 'formulaire')))
+                );
+
+                // Courbe
+                const n = period === '7' ? 7 : period === '30' ? 30 : 90;
+                const rows = (data.daily || []).slice(-n);
+                document.getElementById('daily-sub').textContent = (period === 'all' ? '90 derniers jours' : label) + ' · survolez ou utilisez les flèches du clavier';
+                const daily = document.getElementById('daily');
+                if (rows.length) lineChart(daily, rows);
+                else daily.replaceChildren(el('p', 'empty', 'Pas encore de données'));
+                const table = document.getElementById('daily-table');
+                const head = el('tr');
+                head.append(el('th', '', 'Jour'), el('th', '', 'Visiteurs'));
+                table.replaceChildren(head);
+                rows.slice().reverse().forEach(r => {
+                    const tr = el('tr');
+                    tr.append(el('td', '', dayLabel(r.day, { weekday: 'short', day: 'numeric', month: 'short' })), el('td', '', fmt(r.count)));
+                    table.appendChild(tr);
+                });
+
+                // Heures & jours
+                const hours = p.hours || new Array(24).fill(0);
+                columns(document.getElementById('hours'), hours,
+                    hours.map((_, h) => h + ' h – ' + (h + 1) + ' h'),
+                    hours.map((_, h) => h % 6 === 0 ? h + ' h' : ''), 'visiteurs');
+                columns(document.getElementById('weekdays'), p.weekdays || new Array(7).fill(0),
+                    WEEKDAYS, WEEKDAYS.map(d => d.slice(0, 3)), 'visiteurs');
+
+                // Cartes
+                const sec = new Map((p.sections || []).map(r => [r.name, r.count]));
+                const named = (rows, map) => (rows || []).map(r => ({ label: map ? map(r.name) : (r.name || 'Direct / inconnu'), count: r.count }));
+                document.getElementById('cards').replaceChildren(
+                    barCard('Temps passé', 'Durée de visite (onglet visible)',
+                        DURATIONS.map(d => ({ label: d[1], count: dur.get(d[0]) || 0 })), { keepZero: durTotal > 0, limit: 6 }),
+                    barCard('Parcours de lecture', 'Part des visiteurs ayant vu chaque section',
+                        SECTIONS.map(s => ({ label: s[1], count: sec.get(s[0]) || 0 })), { of: visitors || null, keepZero: sec.size > 0, limit: 11 }),
+                    barCard('Clics', 'CV, documents, stages, liens, formulaire', named(p.clicks, clickLabel), { limit: 10 }),
+                    barCard('Provenance', 'Site d’où arrivent les visiteurs', named(p.referrers)),
+                    barCard('Pays', 'Localisation approximative', named(p.countries)),
+                    barCard('Appareils', 'Selon la taille d’écran', named(p.sizes, s => SIZES[s] || s || 'Inconnu')),
+                    barCard('Navigateurs', '', named(p.browsers)),
+                    barCard('Systèmes', '', named(p.systems))
+                );
+                app.classList.remove('loading');
+            }
+
+            // ---------- interactions ----------
+            document.querySelectorAll('.filters button').forEach(b => b.addEventListener('click', () => {
+                period = b.dataset.period;
+                storage(() => localStorage.setItem('stats-period', period));
+                if (data) render();
+            }));
+            let resizeTimer;
+            addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(() => data && render(), 150); });
+
+            function selfToggle() {
+                const holder = document.getElementById('self');
+                const ignored = storage(() => localStorage.getItem(IGNORE_KEY)) === '1';
+                const btn = el('button', '', ignored ? 'Recompter mes visites' : 'Ne plus compter mes visites');
+                btn.addEventListener('click', () => {
+                    storage(() => ignored ? localStorage.setItem(IGNORE_KEY, '0') : localStorage.setItem(IGNORE_KEY, '1'));
+                    selfToggle();
+                });
+                holder.replaceChildren(ignored ? 'Vos visites ne sont pas comptées. ' : 'Vos visites sont comptées. ', btn);
+            }
+            selfToggle();
+
+            // ---------- chargement (relu chaque heure si la page reste ouverte) ----------
+            function load() {
+                app.classList.add('loading');
+                fetch('../stats.json?h=' + Math.floor(Date.now() / 3600000))
+                    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+                    .then(d => { data = d; render(); })
+                    .catch(() => {
+                        app.classList.remove('loading');
+                        document.getElementById('updated').textContent = 'Impossible de charger les données (stats.json).';
+                    });
+            }
+            load();
+            setInterval(load, 3600000);
+        })();
+    </script>
+</body>
+</html>

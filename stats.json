@@ -1,13 +1,6 @@
 {
  "updated": null,
- "visitors": {},
+ "today": 0,
  "daily": [],
- "duration": [],
- "sections": [],
- "clicks": [],
- "referrers": [],
- "countries": [],
- "sizes": [],
- "browsers": [],
- "systems": []
+ "periods": {}
 }
