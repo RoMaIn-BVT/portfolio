@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Récupère les statistiques GoatCounter et écrit stats.json (lancé chaque heure par GitHub Actions).
 
+Usage : fetch_stats.py [fichier_de_sortie]   (stats.json par défaut)
+
 Variables d'environnement :
   GOATCOUNTER_SITE   code du site (la partie avant .goatcounter.com)
   GOATCOUNTER_TOKEN  clé API GoatCounter (droit « Read statistics » suffit)
@@ -106,7 +108,8 @@ def main():
         "daily": daily,
         "periods": periods,
     }
-    with open("stats.json", "w", encoding="utf-8") as f:
+    out = sys.argv[1] if len(sys.argv) > 1 else "stats.json"
+    with open(out, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=1)
     print("stats.json mis à jour : " + ", ".join(f"{k}={v['visitors']}" for k, v in periods.items()))
     return 0

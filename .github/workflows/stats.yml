@@ -22,16 +22,31 @@ jobs:
         env:
           GOATCOUNTER_SITE: ${{ vars.GOATCOUNTER_SITE }}
           GOATCOUNTER_TOKEN: ${{ secrets.GOATCOUNTER_TOKEN }}
-        run: python3 scripts/fetch_stats.py
-
-      - name: Publier stats.json s'il a changé
         run: |
-          if git diff --quiet -- stats.json; then
-            echo "Aucun changement."
+          mkdir -p "$RUNNER_TEMP/out"
+          python3 scripts/fetch_stats.py "$RUNNER_TEMP/out/stats.json"
+
+      # Publié sur une branche à part : la branche main (et donc Netlify) n'est pas
+      # redéployée toutes les heures. Le site stats/ lit ce fichier directement.
+      - name: Publier stats.json sur la branche stats-data
+        run: |
+          if [ ! -f "$RUNNER_TEMP/out/stats.json" ]; then
+            echo "Pas de nouvelles données."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git fetch --depth 1 origin stats-data; then
+            git checkout -B stats-data FETCH_HEAD
+          else
+            git checkout --orphan stats-data
+            git rm -rfq .
+          fi
+          cp "$RUNNER_TEMP/out/stats.json" stats.json
           git add stats.json
+          if git diff --cached --quiet; then
+            echo "Aucun changement."
+            exit 0
+          fi
           git commit -m "Statistiques : mise à jour horaire"
-          git push
+          git push origin stats-data

@@ -2,7 +2,7 @@
 
 - `index.html` : le portfolio (BTS SIO SISR, Bac+3 DevOps ENI Rennes, alternance Thales).
 - `stats/` : le site de statistiques du portfolio, relié à lui. Il est actualisé chaque heure.
-  Adresse : `…/portfolio/stats/` (ou `…/portfolio/#stats`). Il n'est pas référencé par les moteurs de recherche.
+  Adresse : `https://votre-site.netlify.app/stats/` (ou `…/#stats`). Il n'est pas référencé par les moteurs de recherche.
 
 ## Ce qui est mesuré
 
@@ -24,11 +24,18 @@ Ouvrir le site de stats sur un navigateur exclut ce navigateur des comptages, po
 4. Dans GitHub, onglet *Settings* du dépôt :
    - *Secrets and variables → Actions → Secrets* : ajouter `GOATCOUNTER_TOKEN` (la clé API) ;
    - *Secrets and variables → Actions → Variables* : ajouter `GOATCOUNTER_SITE` (le code) ;
-   - *Pages* : source « Deploy from a branch », branche `main`, dossier `/ (root)`.
-5. Onglet *Actions* → « Statistiques du portfolio » → *Run workflow* pour une première mise à jour.
+5. Sur Netlify : *Add new site → Import an existing project → GitHub* → ce dépôt, branche `main`,
+   sans commande de build, dossier de publication `/` (racine). Le dépôt doit rester **public**,
+   car le site de stats lit les chiffres sur GitHub.
+6. Onglet *Actions* → « Statistiques du portfolio » → *Run workflow* pour une première mise à jour.
 
 Ensuite, `.github/workflows/stats.yml` tourne chaque heure (à hh:07). Il lance `scripts/fetch_stats.py`
-et ne committe `stats.json` que si les chiffres ont changé.
+et publie `stats.json` sur la branche **`stats-data`** (uniquement si les chiffres ont changé).
+Le site `stats/` lit ce fichier directement sur GitHub, si bien que `main` et Netlify ne sont **pas redéployés**
+toutes les heures : pas de consommation inutile de déploiements Netlify. Le `stats.json` de `main`
+ne sert que de secours (vide).
+
+Hébergement ailleurs (GitHub Pages, autre) : rien ne change, le même fonctionnement s'applique.
 
 Pensez aussi à déposer à la racine du dépôt les PDF et dossiers vers lesquels le portfolio pointe
 (CV, rapports de stage, E5…).

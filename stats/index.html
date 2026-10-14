@@ -679,10 +679,18 @@
             selfToggle();
 
             // ---------- chargement (relu chaque heure si la page reste ouverte) ----------
+            // Les chiffres vivent sur la branche « stats-data » du dépôt : le site n'a pas besoin
+            // d'être redéployé chaque heure (Netlify, GitHub Pages…). ../stats.json sert de secours.
+            const DATA_URLS = [
+                'https://raw.githubusercontent.com/RoMaIn-BVT/portfolio/stats-data/stats.json',
+                '../stats.json'
+            ];
             function load() {
                 app.classList.add('loading');
-                fetch('../stats.json?h=' + Math.floor(Date.now() / 3600000))
-                    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+                const bust = '?h=' + Math.floor(Date.now() / 3600000);
+                DATA_URLS.reduce((prev, url) => prev.catch(() =>
+                    fetch(url + bust, { cache: 'no-cache' }).then(r => r.ok ? r.json() : Promise.reject(r.status))
+                ), Promise.reject())
                     .then(d => { data = d; render(); })
                     .catch(() => {
                         app.classList.remove('loading');
