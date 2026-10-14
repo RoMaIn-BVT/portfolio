@@ -1,0 +1,37 @@
+name: Statistiques du portfolio
+
+on:
+  schedule:
+    - cron: "7 * * * *"   # toutes les heures (à hh:07)
+  workflow_dispatch:       # bouton « Run workflow » pour lancer à la main
+
+permissions:
+  contents: write
+
+concurrency:
+  group: stats
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Récupérer les statistiques GoatCounter
+        env:
+          GOATCOUNTER_SITE: ${{ vars.GOATCOUNTER_SITE }}
+          GOATCOUNTER_TOKEN: ${{ secrets.GOATCOUNTER_TOKEN }}
+        run: python3 scripts/fetch_stats.py
+
+      - name: Publier stats.json s'il a changé
+        run: |
+          if git diff --quiet -- stats.json; then
+            echo "Aucun changement."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add stats.json
+          git commit -m "Statistiques : mise à jour horaire"
+          git push
