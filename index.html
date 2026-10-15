@@ -122,9 +122,27 @@ button{ font-family:inherit; }
 .hot-labels{ position:absolute; inset:0; z-index:6; pointer-events:none; }
 .hot-labels.nogl{ inset:auto 0 16% 0; display:flex; flex-wrap:wrap; gap:12px; justify-content:center; padding:0 16px; }
 .hot-labels.nogl .hot{ position:static; transform:none !important; opacity:1 !important; }
-.hot{ pointer-events:auto; position:absolute; left:0; top:0; font:italic 500 18px var(--display); letter-spacing:.01em; color:var(--ivory); background:rgba(12,10,8,.4); -webkit-backdrop-filter:blur(12px) saturate(1.2); backdrop-filter:blur(12px) saturate(1.2);
-  border:1px solid rgba(240,217,160,.28); border-radius:999px; padding:7px 16px 8px 30px; cursor:pointer; white-space:nowrap; transition:opacity .3s, background .25s, border-color .25s; }
-.hot::before{ content:""; position:absolute; left:13px; top:50%; width:7px; height:7px; margin-top:-3.5px; border-radius:50%; background:var(--gold-2); box-shadow:0 0 10px rgba(255,210,140,.9); animation:ping 2.4s infinite; }
+/* étiquettes posées sur les objets : carte en verre fumé, pastille dorée, tige et point lumineux qui désignent l'objet */
+.hot{ pointer-events:auto; position:absolute; left:0; top:0; display:flex; flex-direction:column; align-items:center; background:none; border:0; padding:0; margin:0; color:var(--ivory); cursor:pointer; white-space:nowrap; transition:opacity .3s; font:inherit; }
+.hot-card{ display:flex; align-items:center; gap:11px; padding:8px 18px 8px 8px; border-radius:18px; text-align:left;
+  background:linear-gradient(180deg, rgba(30,24,18,.66), rgba(12,10,8,.52)); -webkit-backdrop-filter:blur(14px) saturate(1.25); backdrop-filter:blur(14px) saturate(1.25);
+  border:1px solid rgba(240,217,160,.3); box-shadow:0 14px 34px rgba(0,0,0,.38), inset 0 1px 0 rgba(255,240,210,.14); transition:transform .35s cubic-bezier(.2,.8,.2,1), border-color .25s, background .25s, box-shadow .25s; }
+.hot-ic{ width:36px; height:36px; flex:none; border-radius:50%; display:grid; place-items:center; color:#2A1A0C; background:radial-gradient(circle at 34% 28%, #FBEFCB, #D9AE5E 62%, #A87A32); box-shadow:0 0 18px rgba(240,200,120,.35), inset 0 -2px 4px rgba(90,50,10,.35); }
+.hot-ic svg{ width:18px; height:18px; }
+.hot-tx b{ display:block; font:italic 600 19px/1.05 var(--display); letter-spacing:.005em; }
+.hot-tx small{ display:block; margin-top:3px; font:600 10px/1 var(--body); letter-spacing:.16em; text-transform:uppercase; color:var(--gold-2); opacity:.92; }
+.hot-stem{ position:relative; width:1px; height:26px; background:linear-gradient(rgba(240,217,160,.75), rgba(240,217,160,.12)); }
+.hot-stem::after{ content:""; position:absolute; left:-4px; bottom:-4px; width:9px; height:9px; border-radius:50%; background:var(--gold-2); box-shadow:0 0 12px rgba(255,210,140,.95); animation:ping 2.4s infinite; }
+.hot.on .hot-card, .hot:hover .hot-card, .hot:focus-visible .hot-card{ transform:translateY(-4px); border-color:rgba(240,217,160,.75); background:linear-gradient(180deg, rgba(48,36,22,.78), rgba(20,15,10,.64)); box-shadow:0 18px 40px rgba(0,0,0,.45), 0 0 0 4px rgba(240,217,160,.08), inset 0 1px 0 rgba(255,240,210,.2); }
+.hot:focus-visible{ outline:none; }
+.hot-labels.nogl .hot-stem{ display:none; }
+@media (max-width:600px){ .hot-card{ padding:6px 12px 6px 6px; gap:8px; border-radius:15px; } .hot-ic{ width:28px; height:28px; } .hot-ic svg{ width:15px; height:15px; } .hot-tx b{ font-size:15.5px; } .hot-tx small{ font-size:8.5px; letter-spacing:.12em; } .hot-stem{ height:16px; } }
+/* boutons avec icône, barre de progression du calendrier */
+.pill.ic{ display:inline-flex; align-items:center; gap:7px; }
+.pill.ic svg{ width:16px; height:16px; flex:none; }
+.pill .prog{ display:inline-block; width:64px; height:4px; border-radius:4px; background:rgba(243,236,223,.18); margin-left:10px; vertical-align:middle; overflow:hidden; }
+.pill .prog i{ display:block; height:100%; border-radius:4px; background:linear-gradient(90deg, var(--gold), var(--gold-2)); }
+.pill b{ font-weight:700; color:var(--gold-2); }
 @keyframes ping{ 0%{ box-shadow:0 0 0 0 rgba(240,217,160,.55); } 70%{ box-shadow:0 0 0 10px rgba(240,217,160,0); } 100%{ box-shadow:0 0 0 0 rgba(240,217,160,0); } }
 .hot.on, .hot:hover{ background:rgba(20,16,10,.66); border-color:rgba(240,217,160,.6); }
 .hud3{ position:absolute; left:50%; bottom:calc(env(safe-area-inset-bottom,0px) + 20px); transform:translateX(-50%); z-index:8; display:flex; gap:8px; align-items:center; flex-wrap:wrap; justify-content:center; width:max-content; max-width:calc(100% - 32px); }
@@ -423,11 +441,11 @@ legend{ font:700 13px var(--body); letter-spacing:.04em; margin-bottom:8px; padd
 
 <!-- ===== barre du haut ===== -->
 <nav class="topbar" id="topbar" aria-label="Navigation">
-  <div class="tb-group"><button class="pill" id="backBtn">← Le salon</button></div>
+  <div class="tb-group"><button class="pill ic" id="backBtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Le salon</span></button></div>
   <span class="mark">Minuit à Londres</span>
   <div class="tb-group">
-    <button class="pill" id="soundBtn" aria-pressed="true">Son activé</button>
-    <button class="pill" id="streetBtn">La rue</button>
+    <button class="pill ic" id="soundBtn" aria-pressed="true">Son activé</button>
+    <button class="pill ic" id="streetBtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V8M9 21h6M8.5 4.5h7l-1.2 3.5h-4.6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/></svg><span>La rue</span></button>
   </div>
 </nav>
 
@@ -462,13 +480,13 @@ legend{ font:700 13px var(--body); letter-spacing:.04em; margin-bottom:8px; padd
     </div>
   </div>
   <div class="hot-labels" id="hotLabels">
-    <button class="hot" data-k="farces">Les farces de Pépin</button>
-    <button class="hot" data-k="calendar">Le calendrier</button>
-    <button class="hot" data-k="sky">Le ciel par la fenêtre</button>
-    <button class="hot" data-k="parents">Le coin des parents</button>
+    <button class="hot" data-k="farces"><span class="hot-card"><i class="hot-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 19c2-8 6-13 14-14-3 3-4 7-3 12" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M4 19h13" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="19.6" cy="4.6" r="1.9" fill="currentColor"/></svg></i><span class="hot-tx"><b>Les farces de Pépin</b><small id="hsFar">6 bêtises à trouver</small></span></span><span class="hot-stem" aria-hidden="true"></span></button>
+    <button class="hot" data-k="calendar"><span class="hot-card"><i class="hot-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 9.5h17M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M8 13h2M12 13h2M8 16.5h2" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></i><span class="hot-tx"><b>Le calendrier</b><small id="hsCal">24 cases à ouvrir</small></span></span><span class="hot-stem" aria-hidden="true"></span></button>
+    <button class="hot" data-k="sky"><span class="hot-card"><i class="hot-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3.5l2.4 5.3 5.8.6-4.4 3.9 1.3 5.7L12 16.1 6.9 19l1.3-5.7-4.4-3.9 5.8-.6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></i><span class="hot-tx"><b>Le ciel par la fenêtre</b><small id="hsSky">Relie les étoiles</small></span></span><span class="hot-stem" aria-hidden="true"></span></button>
+    <button class="hot" data-k="parents"><span class="hot-card"><i class="hot-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 19.5s-7-4.3-7-9.2A3.8 3.8 0 0 1 12 8a3.8 3.8 0 0 1 7 2.3c0 4.9-7 9.2-7 9.2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></i><span class="hot-tx"><b>Le coin des parents</b><small id="hsPar">Prénom et doudou</small></span></span><span class="hot-stem" aria-hidden="true"></span></button>
   </div>
   <div class="hud3" id="hudCal" hidden><span class="pill" id="calCount"></span><label class="switch"><input type="checkbox" id="previewToggle3"> Aperçu parent</label><span class="hud-tip" id="calTip"></span></div>
-  <div class="hud3" id="hudFar" hidden><div class="pill counter" id="counter3" aria-live="polite"></div><button class="pill" id="hint3">Un indice</button><button class="pill" id="light3" aria-pressed="false">Allumer la lumière</button></div>
+  <div class="hud3" id="hudFar" hidden><div class="pill counter" id="counter3" aria-live="polite"></div><button class="pill ic" id="hint3"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.2h5c0-.9.4-1.7 1.1-2.2A6 6 0 0 0 12 3z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg><span>Un indice</span></button><button class="pill ic" id="light3" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><span>Allumer la lumière</span></button></div>
   <div class="sky-ui" id="hudSky" hidden><svg class="pepin-live" viewBox="0 0 120 160" aria-hidden="true"></svg><div class="bubble"><p id="skyText3"></p><button class="ghost" id="skyReplay3" hidden>Rejouer</button></div></div>
 </section>
 
@@ -933,7 +951,7 @@ function initSalon(){
   $$('#hotLabels .hot').forEach(el => el.addEventListener('click', () => { if (!GL.ok) show(MAP[el.dataset.k]); }));
   $('#previewToggle3').addEventListener('change', e => { S.preview = e.target.checked; save(); GL.calStatus && GL.calStatus(); });
   $('#hint3').addEventListener('click', () => GL.hint && GL.hint());
-  $('#light3').addEventListener('click', e => { const on = GL.toggleLight(); e.currentTarget.setAttribute('aria-pressed', on); e.currentTarget.textContent = on ? 'Reprendre la lampe' : 'Allumer la lumière'; });
+  $('#light3').addEventListener('click', e => { const on = GL.toggleLight(); e.currentTarget.setAttribute('aria-pressed', on); e.currentTarget.querySelector('span').textContent = on ? 'Reprendre la lampe' : 'Allumer la lumière'; });
   $('#skyReplay3').addEventListener('click', () => GL.resetSky3 && GL.resetSky3());
 }
 
@@ -1273,7 +1291,8 @@ function initTopbar(){
   $('#backBtn').addEventListener('click', () => { if (current === 's-salon' && GL.ok && GL.sub && GL.sub() !== 'overview') GL.lodge('overview'); else show('s-salon'); });
   $('#streetBtn').addEventListener('click', () => show('s-street'));
   const sbs = [$('#soundBtn'), $('#soundBtn0')];
-  const paint = () => sbs.forEach(sb => { sb.setAttribute('aria-pressed', S.sound); sb.textContent = S.sound ? 'Son activé' : 'Son coupé'; });
+  const SND = on => `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>${on ? '<path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>' : '<path d="M16 9.5l5 5M21 9.5l-5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>'}</svg>`;
+  const paint = () => sbs.forEach(sb => { sb.setAttribute('aria-pressed', S.sound); sb.classList.add('ic'); sb.innerHTML = SND(S.sound) + `<span>${S.sound ? 'Son activé' : 'Son coupé'}</span>`; });
   sbs.forEach(sb => sb.addEventListener('click', () => { S.sound = !S.sound; save(); paint(); if (S.sound) chime([1046,1318]); })); paint();
   $('#sheetBtn').addEventListener('click', closeSheet);
   addEventListener('keydown', e => {
@@ -2272,22 +2291,29 @@ async function initGL(progress = () => {}){
   const treeL = new THREE.PointLight(Lc('#FFD2A0'), 3.2, 8, 2); treeL.position.set(4.5, 1.9, -1.1); salon.add(treeL);
   const lampL = new THREE.PointLight(Lc('#FFD7A8'), 2.8, 7.5, 2); lampL.position.set(-5.35, 1.7, -1.25); salon.add(lampL);
   const scL = [(() => { const l = new THREE.PointLight(Lc('#FFD09A'), 2.6, 6.5, 2); l.position.set(0, 2.55, -4.45); salon.add(l); return l; })()];   // les deux appliques, une seule lumière
-  const chandL = new THREE.PointLight(Lc('#FFE2C0'), .62, 9, 2); chandL.position.set(0, 2.6, -1.5); salon.add(chandL);
+  const chandL = new THREE.PointLight(Lc('#FFE2C0'), .32, 7, 2); chandL.position.set(0, 3.2, -1.5); salon.add(chandL);
+  // le lustre éclaire surtout vers le bas : une douche de lumière chaude sur le tapis et la table basse, plafond laissé dans la pénombre
+  const chandS = new THREE.SpotLight(Lc('#FFD9A8'), 3.4, 9, .78, .85, 1.6); chandS.position.set(0, 3.35, -1.5); chandS.target.position.set(.15, 0, -1.4); salon.add(chandS); salon.add(chandS.target);
+  chandS.castShadow = !LITE; chandS.shadow.mapSize.set(1024, 1024); chandS.shadow.bias = -.0012; chandS.shadow.normalBias = .02; chandS.shadow.camera.near = .5; chandS.shadow.camera.far = 6; chandS.shadow.autoUpdate = false; chandS.shadow.needsUpdate = true;
   const winL = new THREE.DirectionalLight(Lc('#9DB8FF'), .75); winL.position.set(-4.4, 4.6, -10); winL.target.position.set(-2.6, 0, -1.6); salon.add(winL); salon.add(winL.target);
   winL.castShadow = true; winL.shadow.mapSize.set(LITE ? 512 : 1024, LITE ? 512 : 1024); Object.assign(winL.shadow.camera, { left:-4, right:4, top:4, bottom:-4, near:1, far:18 }); winL.shadow.bias = -.0008; winL.shadow.normalBias = .02; winL.shadow.autoUpdate = false; winL.shadow.needsUpdate = true;
   if (!coarse){ fireL.castShadow = true; fireL.shadow.mapSize.set(512, 512); fireL.shadow.bias = -.003; fireL.shadow.normalBias = .03; fireL.shadow.camera.near = .08; fireL.shadow.camera.far = 10; fireL.shadow.autoUpdate = false; fireL.shadow.needsUpdate = true; }
-  const reshadow = () => { fireL.shadow.needsUpdate = true; winL.shadow.needsUpdate = true; };
+  const reshadow = () => { fireL.shadow.needsUpdate = true; winL.shadow.needsUpdate = true; chandS.shadow.needsUpdate = true; };
   const torch = new THREE.SpotLight(Lc('#FFF1D6'), 0, 14, .4, .75, 1.4); salon.add(torch); salon.add(torch.target);
-  const BASE_I = new Map([[hemi, .2], [chandL, .62], [lampL, 2.8], [scL[0], 2.6], [treeL, 3.2]]);
+  const BASE_I = new Map([[hemi, .2], [chandL, .32], [chandS, 3.4], [lampL, 2.8], [scL[0], 2.6], [treeL, 3.2]]);
   let dim = 1;
 
   /* ----- pièce : parquet, murs, lambris blancs, corniche, plafond ----- */
+  // occlusion au pied des murs : le parquet s'assombrit doucement contre les plinthes
+  { const aoC = cv(256, 256, (g, w) => { const im = g.createImageData(w, w); for (let y = 0; y < w; y++) for (let x = 0; x < w; x++){ const X = x/w*12 - 6, Z = y/w*11 - 5, e = Math.max(ss(1.5, 0, X + 6), ss(1.5, 0, 6 - X), ss(1.3, 0, Z + 5)); const i = (y*w + x)*4; im.data[i] = im.data[i+1] = im.data[i+2] = 0; im.data[i+3] = e*150; } g.putImageData(im, 0, 0); });
+    const ao = add(new THREE.PlaneGeometry(12, 11), new THREE.MeshBasicMaterial({ map:tex(aoC, null, false), transparent:true, depthWrite:false, polygonOffset:true, polygonOffsetFactor:-2, polygonOffsetUnits:-2 }), 0, .003, .5); ao.rotation.x = -Math.PI/2; ao.renderOrder = 1; }
   const floor = sh(add(new THREE.PlaneGeometry(14, 12), floorMat, 0, 0, 0), false, true); floor.rotation.x = -Math.PI/2;
   const WIN = { x0:-4.8, x1:-3.2, y0:.75, y1:3.15 };
   const wallPart = (x0, x1, y0, y1) => { const w = x1 - x0, h = y1 - y0; return sh(add(aoPlane(w, h, y0), wallMat(w, h), (x0 + x1)/2, (y0 + y1)/2, -5), true, true); };
   wallPart(-6, WIN.x0, 0, 4.2); wallPart(WIN.x1, 6, 0, 4.2); wallPart(WIN.x0, WIN.x1, 0, WIN.y0); wallPart(WIN.x0, WIN.x1, WIN.y1, 4.2);
   [-6, 6].forEach(x => { const p = sh(add(aoPlane(12, 4.2, 0), wallMat(12, 4.2), x, 2.1, 1), false, true); p.rotation.y = x < 0 ? Math.PI/2 : -Math.PI/2; });
-  const ceil = add(new THREE.PlaneGeometry(14, 12), std('#B9B0A3', { roughness:.95 }), 0, 4.2, 0); ceil.rotation.x = Math.PI/2;
+  const ceilC = cv(256, 256, (g, w) => { const r = g.createRadialGradient(w/2, w*.625, 6, w/2, w*.625, w*.62); r.addColorStop(0, '#D8CFC2'); r.addColorStop(.45, '#9C9488'); r.addColorStop(1, '#4A443C'); g.fillStyle = r; g.fillRect(0, 0, w, w); });
+  const ceil = add(new THREE.PlaneGeometry(14, 12), std('#ffffff', { map:tex(ceilC), roughness:.95, envMapIntensity:.3 }), 0, 4.2, 0); ceil.rotation.x = Math.PI/2;
   add(new THREE.CylinderGeometry(.62, .7, .06, 48), paint, 0, 4.17, -1.5); add(new THREE.TorusGeometry(.5, .04, 8, 48), paint, 0, 4.13, -1.5).rotation.x = Math.PI/2;
   const wainscot = (x0, x1, z, rotY = 0, xFix) => { const w = x1 - x0, g = new THREE.Group(); g.position.set(xFix !== undefined ? xFix : (x0 + x1)/2, 0, z); g.rotation.y = rotY; salon.add(g);
     sh(add(new THREE.BoxGeometry(w, 1.05, .05), paint, 0, .525, 0, g), false, true);
@@ -2476,7 +2502,7 @@ async function initGL(progress = () => {}){
   [-1, 1].forEach(s => { sh(add(new THREE.BoxGeometry(.55, 3.3, .12, 1, 1, 1), velvetRed, -4 + s*1.08, 2.05, -4.82)); add(new THREE.TorusGeometry(.18, .025, 8, 20), brass, -4 + s*1.08, 1.45, -4.74).scale.set(1.4, .6, 1); });
   sh(add(RB(2.5, .32, .2, .04), velvetRed, -4, 3.6, -4.82));
   const shaftC = cv(64, 256, (g, w, h) => { const r = g.createLinearGradient(0, 0, 0, h); r.addColorStop(0, 'rgba(160,190,255,0)'); r.addColorStop(.25, 'rgba(160,190,255,.5)'); r.addColorStop(1, 'rgba(160,190,255,0)'); g.fillStyle = r; g.fillRect(0, 0, w, h); });
-  const shaftMat = new THREE.MeshBasicMaterial({ map:tex(shaftC, null, false), transparent:true, opacity:.1, blending:THREE.AdditiveBlending, depthWrite:false, side:THREE.DoubleSide });
+  const shaftMat = new THREE.MeshBasicMaterial({ map:tex(shaftC, null, false), transparent:true, opacity:.16, blending:THREE.AdditiveBlending, depthWrite:false, side:THREE.DoubleSide });
   for (let k = 0; k < 3; k++){ const p = add(new THREE.PlaneGeometry(1.5 - k*.25, 4.4), shaftMat, -3.4 + k*.12, 1.4, -3.4); p.rotation.set(-.95, .38 + k*.08, 0); }
   const flakeShape = new THREE.Shape(); for (let k = 0; k < 12; k++){ const a = k*Math.PI/6, r = k % 2 ? .05 : .16; k ? flakeShape.lineTo(Math.cos(a)*r, Math.sin(a)*r) : flakeShape.moveTo(Math.cos(a)*r, Math.sin(a)*r); }
   const paperFlakes = [[-4.45, 2.55], [-3.95, 2.85], [-3.5, 2.45]].map(([x, y]) => { const f = add(new THREE.ExtrudeGeometry(flakeShape, { depth:.01, bevelEnabled:false }), std('#F6F2EA', { roughness:.9 }), x, y, -4.92); add(new THREE.CylinderGeometry(.003, .003, 3.2 - y, 4), std('#C9B27A'), x, y + (3.2 - y)/2 + .1, -4.92); return f; });
@@ -2680,9 +2706,9 @@ async function initGL(progress = () => {}){
     sky:      () => portraitView() ? { p:new V3(-4, 1.95, -2.8), t:new V3(-4.4, 4.2, -11.8), fov:66 } : { p:new V3(-4, 1.9, -3.4), t:new V3(-4.5, 4.3, -11.8), fov:54 }
   };
   const HOT = {
-    farces:{ anchor:new V3(.66, 2.05, -4.36), box:[.5, .7, .5, .66, 1.8, -4.36] },
-    calendar:{ anchor:new V3(2.45, 3.15, -4.85), box:[1.35, 2, .4, 2.45, 2.3, -4.85] },
-    sky:{ anchor:new V3(-4, 3.3, -4.9), box:[1.7, 2.5, .3, -4, 1.95, -4.95] },
+    farces:{ anchor:new V3(.66, 1.95, -4.36), box:[.5, .7, .5, .66, 1.8, -4.36] },
+    calendar:{ anchor:new V3(2.45, 2.72, -4.8), box:[1.35, 2, .4, 2.45, 2.3, -4.85] },
+    sky:{ anchor:new V3(-4, 2.75, -4.9), box:[1.7, 2.5, .3, -4, 1.95, -4.95] },
     parents:{ anchor:new V3(-3.25, .95, -2.0), box:[.7, .5, .7, -3.25, .78, -2.0] }
   };
   const haloMat = () => new THREE.SpriteMaterial({ map:radial, color:new THREE.Color(1.4, 1, .55), transparent:true, opacity:0, depthTest:false, depthWrite:false, blending:THREE.AdditiveBlending });
@@ -2718,7 +2744,11 @@ async function initGL(progress = () => {}){
     gsap.to(camRide, { u:1, duration:RM ? 0 : dur, ease, onUpdate:() => { const u = camRide.u; pc.getPoint(u, scam.pos); tc.getPoint(u, scam.tgt); camSalon.fov = f0 + (v.fov - f0)*u; scam.roll = Math.sin(u*Math.PI)*(path ? .03 : .015); camSalon.updateProjectionMatrix(); }, onComplete:() => { scam.roll = 0; GL.locked = false; cb && cb(); } });
   };
   const titleCard = () => { const g = $('#greet3'); g.style.display = ''; if (RM){ gsap.set(g, { autoAlpha:1 }); return; } gsap.killTweensOf(g); gsap.timeline().fromTo(g, { autoAlpha:0, y:-10 }, { autoAlpha:1, y:0, duration:1.2, ease:'power2.out' }).to(g, { autoAlpha:0, duration:1.2, delay:3.2 }); };
-  const showLabels = on => { const h = $('#hotLabels'); gsap.killTweensOf(h); if (on){ h.style.display = ''; gsap.fromTo(h, { autoAlpha:0 }, { autoAlpha:1, duration:RM ? 0 : .9, delay:RM ? 0 : .3 }); } else gsap.set(h, { autoAlpha:0, display:'none' }); };
+  const labelInfo = () => { const n = S.opened.length, f = S.found.length; $('#hsCal').textContent = n ? `${n} / 24 cases ouvertes` : '24 cases à ouvrir'; $('#hsFar').textContent = f ? (f === 6 ? 'Toutes trouvées !' : `${f} / 6 farces trouvées`) : '6 bêtises à trouver'; $$('#hotLabels .hot').forEach(el => { el._hw = 0; }); };
+  const showLabels = on => { const h = $('#hotLabels'), gr = $('#greet3'); gsap.killTweensOf(h); if (on){ labelInfo(); h.style.display = '';
+    // le titre d'accueil s'efface d'abord, les étiquettes arrivent ensuite : jamais l'un sur l'autre
+    const greetOn = !RM && gr.style.display !== 'none' && +getComputedStyle(gr).opacity > .1, d = greetOn ? 2.9 : .35; if (greetOn) gsap.to(gr, { autoAlpha:0, duration:.8, delay:2.2, overwrite:'auto' });
+    gsap.fromTo('#hotLabels .hot-card', { y:12, opacity:0 }, { y:0, opacity:1, duration:RM ? 0 : .9, stagger:.09, delay:RM ? 0 : d, ease:'power3.out', clearProps:'transform,opacity' }); gsap.fromTo(h, { autoAlpha:0 }, { autoAlpha:1, duration:RM ? 0 : .9, delay:RM ? 0 : d - .05 }); } else gsap.set(h, { autoAlpha:0, display:'none' }); };
   GL.sub = () => sub;
   GL.lodge = (mode, opts = {}) => {
     sub = mode;
@@ -2737,7 +2767,7 @@ async function initGL(progress = () => {}){
     $('#backBtn').style.visibility = mode === 'overview' ? 'hidden' : 'visible';
   };
   GL.toggleLight = () => { lightOn = !lightOn; torch.intensity = lightOn ? 0 : 2.8; dim = lightOn ? 1 : .48; applyDim(); return lightOn; };
-  GL.calStatus = () => { const n = new Date(); $('#calCount').textContent = `${S.opened.length} case${S.opened.length > 1 ? 's' : ''} ouverte${S.opened.length > 1 ? 's' : ''} sur 24`; $('#previewToggle3').checked = !!S.preview; $('#calTip').textContent = S.preview ? 'Aperçu parent : toutes les cases s\'ouvrent.' : n.getMonth() === 11 ? 'Touche la case du jour.' : 'Les cases s\'ouvrent à partir du 1er décembre.'; };
+  GL.calStatus = () => { const n = new Date(); $('#calCount').innerHTML = `<b>${S.opened.length}</b>&nbsp;/ 24 case${S.opened.length > 1 ? 's' : ''} ouverte${S.opened.length > 1 ? 's' : ''}<span class="prog"><i style="width:${S.opened.length/24*100}%"></i></span>`; $('#previewToggle3').checked = !!S.preview; $('#calTip').textContent = S.preview ? 'Aperçu parent : toutes les cases s\'ouvrent.' : n.getMonth() === 11 ? 'Touche la case du jour.' : 'Les cases s\'ouvrent à partir du 1er décembre.'; };
   function updateCounter3(){ $('#counter3').innerHTML = PRANKS.map(p => `<svg viewBox="0 0 20 20" aria-hidden="true" class="${S.found.includes(p.id) ? 'on' : ''}"><path d="${starPath}"/></svg>`).join('') + `<span class="sr">${S.found.length} farces trouvées sur 6</span>`; }
   function resetSky3(){ skyStep = 0; dipLineGeo.setDrawRange(0, 0); $('#skyText3').textContent = t('Relie les étoiles avec moi, {p} ! Touche celle qui clignote, puis la suivante.'); $('#skyReplay3').hidden = true; }
   GL.resetSky3 = resetSky3;
@@ -2846,7 +2876,7 @@ async function initGL(progress = () => {}){
   const finalPass = new THREE.ShaderPass(FINAL); composer.addPass(finalPass);
   let fxaa = null;
   if (!useMSAA && THREE.FXAAShader){ fxaa = new THREE.ShaderPass(THREE.FXAAShader); fxaa.uniforms.resolution.value.set(1/(innerWidth*pr), 1/(innerHeight*pr)); composer.addPass(fxaa); }
-  const GRADE = { city:{ exposure:.95, sat:1.12, contrast:1.1, tS:new V3(.88, .96, 1.14), tH:new V3(1.06, 1, .9), vig:.42, grain:.034, ca:.012, bS:.5, bR:.38, bT:1.15 },
+  const GRADE = { city:{ exposure:.97, sat:1.16, contrast:1.14, tS:new V3(.86, .95, 1.18), tH:new V3(1.08, 1, .87), vig:.44, grain:.032, ca:.012, bS:.56, bR:.42, bT:1.1 },
                   flue:{ exposure:1.0, sat:1.15, contrast:1.12, tS:new V3(.92, .9, .96), tH:new V3(1.08, .98, .86), vig:.55, grain:.03, ca:.014, bS:.48, bR:.5, bT:1.15 },
                   salon:{ exposure:1.2, sat:1.04, contrast:1.16, tS:new V3(.92, .98, 1.08), tH:new V3(1.03, 1, .95), vig:.4, grain:.026, ca:.008, bS:.34, bR:.42, bT:1.35 } };
   const lerp = (a, b, k) => a + (b - a)*k;
@@ -2875,7 +2905,7 @@ async function initGL(progress = () => {}){
   };
   const arrived = () => {
     GL.arriving = false; GL.locked = false; sub = 'overview'; bars(false);
-    showLabels(true); titleCard(); refreshNames();
+    titleCard(); showLabels(true); refreshNames();
     $('#backBtn').style.visibility = 'hidden';
     if (pendingGo) setTimeout(goPending, RM ? 0 : 500);
   };
@@ -2977,7 +3007,7 @@ async function initGL(progress = () => {}){
   function updateSalon(dt, t){
     fireU.t.value = t; if (fire.isMesh) fireU.uCam.value.copy(fire.worldToLocal(tmpV.copy(camSalon.position)));
     const fl1 = Math.sin(t*13.1)*.5 + Math.sin(t*7.7 + 1.3)*.35 + Math.sin(t*21.3)*.15;
-    fireL.intensity = 6.0 + fl1*1.3; fireL2.intensity = 1.7 + fl1*.45; chandL.intensity = .62*dim + Math.sin(t*9.1)*.025;
+    fireL.intensity = 6.0 + fl1*1.3; fireL2.intensity = 1.7 + fl1*.45; chandL.intensity = .32*dim + Math.sin(t*9.1)*.02;
     fireFloor.material.opacity = .32 + fl1*.06; logMat.emissiveIntensity = 2.7 + fl1*.6;
     salonHooks.forEach(f => f(t, dt));
     for (let i = 0; i < emberN; i++){ const s = emberS[i]; s.l += dt*s.v*.6; if (s.l > 1){ s.l = 0; s.x = rnd(-.4, .4); s.z = rnd(-4.8, -4.5); } emberA[i*3] = s.x + Math.sin(t*2 + i)*.08*s.l; emberA[i*3+1] = .2 + s.l*1.1; emberA[i*3+2] = s.z + s.l*.25; }
@@ -3010,7 +3040,7 @@ async function initGL(progress = () => {}){
     if (sub === 'sky' && !GL.locked) pointer = !!hit(camSalon, [...dipStars, berger]);
     document.body.style.cursor = pointer ? 'pointer' : '';
     Object.entries(HOT).forEach(([k, h]) => {
-      const el = hotEls[k]; const [x, y, z] = screenOf(h.anchor, camSalon), hw = el._hw || (el._hw = el.offsetWidth/2 + 8);
+      const el = hotEls[k]; const [x, y, z] = screenOf(h.anchor, camSalon), hw = el._hw || (el.offsetWidth ? (el._hw = el.offsetWidth/2 + 8) : 120);
       el.style.transform = `translate(${Math.min(innerWidth - hw, Math.max(hw, x))}px, ${y}px) translate(-50%, -100%)`;
       el.style.opacity = z < 1 && !GL.locked ? 1 : 0; el.classList.toggle('on', hov === k);
       hotHalos[k].material.opacity += ((hov === k ? .5 : 0) - hotHalos[k].material.opacity)*.15;
