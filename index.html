@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>La Boussole des Étoiles</title>
+<title>Minuit à Londres</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -419,12 +419,12 @@ legend{ font:700 13px var(--body); letter-spacing:.04em; margin-bottom:8px; padd
 <canvas id="snow" aria-hidden="true"></canvas>
 <div id="fade" aria-hidden="true"></div>
 <div class="lbar t" aria-hidden="true"></div><div class="lbar b" aria-hidden="true"></div>
-<div id="loader" role="status" aria-live="polite"><div><p class="k">Londres · nuit de décembre</p><h2>La Boussole des Étoiles</h2><div class="bar"><i id="loadBar"></i></div></div></div>
+<div id="loader" role="status" aria-live="polite"><div><p class="k">Un conte de Noël avec Pépin</p><h2>Minuit à Londres</h2><div class="bar"><i id="loadBar"></i></div></div></div>
 
 <!-- ===== barre du haut ===== -->
 <nav class="topbar" id="topbar" aria-label="Navigation">
   <div class="tb-group"><button class="pill" id="backBtn">← Le salon</button></div>
-  <span class="mark">La Boussole des Étoiles</span>
+  <span class="mark">Minuit à Londres</span>
   <div class="tb-group">
     <button class="pill" id="soundBtn" aria-pressed="true">Son activé</button>
     <button class="pill" id="streetBtn">La rue</button>
@@ -434,12 +434,12 @@ legend{ font:700 13px var(--body); letter-spacing:.04em; margin-bottom:8px; padd
 <!-- ===== 1. LONDRES ===== -->
 <section class="screen" id="s-street" aria-label="Londres sous la neige">
   <header class="land-top">
-    <span class="land-brand"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M16 4.5v3M16 24.5v3M4.5 16h3M24.5 16h3" stroke="currentColor" stroke-width="1.3"/><path d="M16 8.5l3.2 7.5-3.2 7.5-3.2-7.5z" fill="currentColor"/></svg><span>La Boussole des Étoiles</span></span>
+    <span class="land-brand"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M16 4.5v3M16 24.5v3M4.5 16h3M24.5 16h3" stroke="currentColor" stroke-width="1.3"/><path d="M16 8.5l3.2 7.5-3.2 7.5-3.2-7.5z" fill="currentColor"/></svg><span>Minuit à Londres</span></span>
     <div class="land-tools"><span class="countdown" id="countdown"></span><button class="pill" id="soundBtn0" aria-pressed="true">Son activé</button></div>
   </header>
   <div class="street-ui">
-    <p class="land-kicker" id="landKicker">Un conte de Noël à Londres</p>
-    <h1 class="wordmark" id="wordmark">La Boussole des Étoiles</h1>
+    <p class="land-kicker" id="landKicker">Le Noël de Pépin</p>
+    <h1 class="wordmark" id="wordmark">Minuit à Londres</h1>
     <p class="lede" id="lede">Cette nuit, la neige recouvre Londres et une cheminée s'est mise à luire. Pépin t'attend de l'autre côté.</p>
     <div class="land-actions"><button class="cta" id="enterBtn">Entrer par la cheminée <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></button><span class="land-hint">ou touche la cheminée qui brille</span></div>
     <nav class="land-menu" aria-label="Aller directement à">
@@ -1263,7 +1263,7 @@ function initParents(){
 }
 function refreshNames(){
   $('#greetTitle').textContent = t('Bonsoir {p}');
-  $('#landKicker').textContent = t('Pour {p} · un conte de Noël à Londres');
+  $('#landKicker').textContent = t('Pour {p} · le Noël de Pépin');
   $('#lede').textContent = t("Cette nuit, la neige recouvre Londres et une cheminée s'est mise à luire. Pépin t'attend de l'autre côté, {p}.");
   if (GL.setStocking) GL.setStocking(S.prenom); $('#tagName').textContent = S.doudou;
 }
@@ -1608,7 +1608,7 @@ async function initGL(progress = () => {}){
     for (let i = 0; i < p.count; i++){ const r = Math.hypot(p.getX(i), p.getZ(i)); uv.setY(i, r < .15 ? 1 : Math.min(.97, p.getY(i)/ph*.97)); }
     return g; };
   const FH = [3.6, 3.7, 3.1, 2.8, 2.5], WH = [2.25, 2.5, 2.0, 1.72, 1.32], SO = [.78, .5, .55, .5, .5];
-  const railPts = [], spill = [], potTops = [], lampsWin = [];
+  const railPts = [], spill = [], potTops = [], lampsWin = [], balPts = [], wreathL = [];
   let hero = null;
   const pickLit = () => LIT[Math.floor(R()*LIT.length)], pickDark = () => DARK[Math.floor(R()*DARK.length)];
 
@@ -1650,9 +1650,15 @@ async function initGL(progress = () => {}){
             lbox('trim', -1.32, .02, 3.35, 3.68, zc + op.w/2 + .62, zc - op.w/2 - .62); lbox('trim', -1.4, .02, 3.68, 3.8, zc + op.w/2 + .7, zc - op.w/2 - .7);
           }
           h.door = { zc, y:op.y0, w:op.w };
+          if (!h.hero && R() > .4){ const tor = new THREE.TorusGeometry(.25, .075, 8, 24); tor.rotateY(Math.PI/2); tor.translate(-.07, op.y0 + 1.6, zc); lgeo('wreath', tor);
+            const bw = new THREE.SphereGeometry(.065, 10, 8); bw.scale(1, .8, 1.4); bw.translate(-.12, op.y0 + 1.37, zc); lgeo('bow', bw);
+            for (let k = 0; k < 9; k++){ const a = k/9*Math.PI*2 + R(); wreathL.push(wpt(-.14, op.y0 + 1.6 + Math.sin(a)*.25, zc + Math.cos(a)*.25)); } }
         }
       }
     });
+    // balcon filant en fonte au premier étage (maisons géorgiennes)
+    if (h.hero || R() > .35){ const yb = ys[1]; lbox('trim', -.6, 0, yb - .04, yb + .1, 0, -w); lbox('iron', -.6, -.55, yb + .93, yb + .99, -.03, -w + .03);
+      for (let z = -.06; z > -w + .05; z -= .11){ const p = wpt(-.575, yb + .1, z); balPts.push([p.x, p.y, p.z]); } }
     // bandeau, corniche, parapet
     lbox('trim', -.1, .3, ys[1] - .08, ys[1] + .14, 0, -w);
     lbox('trim', -.1, .3, H - .3, H, 0, -w); lbox('trim', -.3, .4, H, H + .2, 0, -w);
@@ -1772,6 +1778,7 @@ async function initGL(progress = () => {}){
     terra: snowify(std('#ffffff', { map:potMap, roughness:.78, side:THREE.DoubleSide, envMapIntensity:.2 })),
     flaunch: snowify(std('#7E7B76', { roughness:.92, envMapIntensity:.1 })),
     soot: std('#050403', { roughness:1 }),
+    wreath: snowify(std('#1F4A2C', { roughness:.92 }), .5), bow: phys('#8E0F1A', { roughness:.35, clearcoat:.6 }),
     iron: snowify(std('#0F1014', { roughness:.42, metalness:.65, envMapIntensity:.6 })),
     curb: snowify(std('#7A7A7E', { roughness:.75 }), 1, .5),
     snow: snowify(std('#E9EEF7', { roughness:.62 })),
@@ -1787,7 +1794,11 @@ async function initGL(progress = () => {}){
   { const bar = new THREE.BoxGeometry(.022, 1.0, .022); bar.translate(0, .5, 0); const tip = new THREE.ConeGeometry(.034, .13, 6); tip.translate(0, 1.06, 0);
     const im = new THREE.InstancedMesh(merge([bar, tip]), MAT.iron, railPts.length), o = new THREE.Object3D();
     railPts.forEach((p, i) => { o.position.set(p[0], p[1], p[2]); o.updateMatrix(); im.setMatrixAt(i, o.matrix); });
-    im.castShadow = true; im.receiveShadow = true; city.add(im); }
+    im.castShadow = true; im.receiveShadow = true; city.add(im);
+    const bb2 = new THREE.BoxGeometry(.018, .84, .018); bb2.translate(0, .42, 0); const scr = new THREE.TorusGeometry(.045, .008, 4, 10); scr.translate(0, .62, 0);
+    const ib = new THREE.InstancedMesh(merge([bb2, scr]), MAT.iron, balPts.length);
+    balPts.forEach((p, i) => { o.position.set(p[0], p[1], p[2]); o.rotation.set(0, Math.PI/2, 0); o.updateMatrix(); ib.setMatrixAt(i, o.matrix); }); o.rotation.set(0, 0, 0);
+    ib.castShadow = true; city.add(ib); }
   // toits lointains : pots instanciés, fenêtres allumées (intérieurs chauds) ou sombres (reflets du ciel)
   { const im = new THREE.InstancedMesh(potGeo(.7, 10), MAT.terra, farPots.length), o = new THREE.Object3D();
     farPots.forEach(([x, y, z, ph], i) => { o.position.set(x, y, z); o.rotation.set(0, R()*6, 0); o.scale.set(1, ph/.7, 1); o.updateMatrix(); im.setMatrixAt(i, o.matrix); }); city.add(im);
@@ -1849,6 +1860,7 @@ async function initGL(progress = () => {}){
   for (let k = 0; k <= 30; k++){ const u = k/30, a = wpt(-1.36, 3.82 + Math.sin(u*Math.PI)*-.18, hero.door.zc + hero.door.w/2 + .7 - u*(hero.door.w + 1.4)); heroGlow.push([a.x, a.y, a.z, 2.4, 1.75, 1.0, .11, .45]); }
   for (let k = 0; k <= 48; k++){ const u = k/48, a = wpt(-.36, hero.H + .25 - Math.sin(u*Math.PI*6)*.12 - .05, -u*hero.w); heroGlow.push([a.x, a.y, a.z, 2.2, 1.6, .95, .1, .5]); }
   city.add(glows(heroGlow, { fog:.0035, core:.55 }));
+  city.add(glows(wreathL.map(p => [p.x, p.y, p.z, 2.4, 1.75, 1.0, .09, .45]), { fog:.0035, core:.55 }));
   [-1, 1].forEach(s => { const p = wpt(-.45, hero.door.y + 2.5, hero.door.zc + s*(hero.door.w/2 + .75)); city.add(glows([[p.x, p.y, p.z, 2.6, 1.8, .9, .9, 0], [p.x, p.y, p.z, 2, 1.3, .6, 2.6, 0]], { fog:.0035, core:.5 })); });
   { const l = new THREE.PointLight(Lc('#FFB060'), 1.6, 12, 2); l.position.copy(wpt(-2.2, 3.2, hero.door.zc)); city.add(l); }
   const magic = potTops.find(p => p.hero).p, potsByDist = potTops.slice().sort((a, b) => a.p.distanceTo(new V3(0, 8, 30)) - b.p.distanceTo(new V3(0, 8, 30)));
@@ -1954,32 +1966,68 @@ async function initGL(progress = () => {}){
 
   /* ----- véhicules : taxis noirs, bus rouge à impériale, voitures garées sous la neige ----- */
   const glassDark = std('#07080B', { roughness:.05, metalness:.1, envMapIntensity:1.2 }), tyre = std('#0C0C0E', { roughness:.85 }), chrome = std('#C9CED6', { roughness:.18, metalness:1, envMapIntensity:1.1 });
+  // carrosseries extrudées depuis un vrai profil (passages de roue, capot, pare-brise incliné, toit galbé)
+  const prof = (L, yb, arches, top, ar = .41) => {   // top : points [x, y] de l'avant (x = L) vers l'arrière (x = 0), dans le sens du contour
+    const sh = new THREE.Shape(); sh.moveTo(-L/2, yb);
+    arches.forEach(c => { sh.lineTo(c - ar - L/2, yb); for (let k = 0; k <= 14; k++){ const a = Math.PI - k/14*Math.PI; sh.lineTo(c + Math.cos(a)*ar - L/2, yb + Math.sin(a)*ar); } });
+    sh.lineTo(L/2, yb); top.forEach(([x, y, cx, cy]) => cx !== undefined ? sh.quadraticCurveTo(cx - L/2, cy, x - L/2, y) : sh.lineTo(x - L/2, y)); sh.lineTo(-L/2, yb);
+    return sh; };
+  const ext = (shape, w, bev = .07) => { const g = new THREE.ExtrudeGeometry(shape, { depth:w - 2*bev, bevelEnabled:true, bevelThickness:bev, bevelSize:bev*.8, bevelSegments:3, curveSegments:10 }); g.translate(0, 0, -(w - 2*bev)/2); g.rotateY(-Math.PI/2); return g; };
+  const quad = pts => { const s = new THREE.Shape(); pts.forEach(([x, y], i) => i ? s.lineTo(x, y) : s.moveTo(x, y)); return s; };
+  const rimMat = std('#B9BEC6', { roughness:.25, metalness:1, envMapIntensity:1.2 }), lampLens = hdr(3.4, 3.1, 2.6), tailLens = hdr(2.6, .18, .12), cabSign = hdr(3.2, 2.1, .35), busLit = hdr(2.1, 1.55, .95), cream = std('#E8DDC2', { roughness:.5 });
+  // vitres du bus : montants, intérieur chaud, dossiers de sièges et quelques passagers en ombre chinoise
+  const busWin = tex(cv(1024, 96, (g, w, h) => { const gr = g.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, '#FFE2B4'); gr.addColorStop(1, '#C88A50'); g.fillStyle = gr; g.fillRect(0, 0, w, h);
+    for (let k = 0; k < 9; k++){ const x = k*w/9; g.fillStyle = 'rgba(120,40,30,.55)'; g.fillRect(x + 12, h*.55, w/9 - 24, h*.45); if (R() > .45){ g.fillStyle = 'rgba(40,22,16,.78)'; const cx = x + 30 + R()*(w/9 - 60); g.beginPath(); g.arc(cx, h*.42, 9, 0, 7); g.fill(); g.fillRect(cx - 13, h*.52, 26, h*.5); } }
+    g.fillStyle = '#2A0C0C'; for (let k = 0; k <= 9; k++) g.fillRect(k*w/9 - 5, 0, 10, h); g.fillRect(0, 0, w, 5); g.fillRect(0, h - 5, w, 5); }));
+  busWin.wrapS = busWin.wrapT = THREE.ClampToEdgeWrapping;
   const vehicle = (kind, color, snowAmt) => {
-    const g = new THREE.Group(), paint = snowify(phys(color, { roughness:.32, metalness:.45, clearcoat:1, clearcoatRoughness:.1, envMapIntensity:1 }), snowAmt);
-    const add = (geo, m, x, y, z) => { const mm = new THREE.Mesh(geo, m); mm.position.set(x, y, z); mm.castShadow = true; mm.receiveShadow = true; g.add(mm); return mm; };
-    const L = kind === 'bus' ? 9.6 : kind === 'cab' ? 4.55 : 4.35, Wd = kind === 'bus' ? 2.5 : 1.8;
-    if (kind === 'bus'){
-      add(RB(Wd, 3.9, L, .25, 3), paint, 0, 2.35, 0); add(RB(Wd + .02, .18, L + .02, .05), std('#E8DDC2', { roughness:.5 }), 0, 2.65, 0);
-      [1.65, 3.35].forEach(y => [-1, 1].forEach(s => { const p = add(new THREE.PlaneGeometry(L - 1.4, .85), hdr(2.3, 1.75, 1.05), s*(Wd/2 + .012), y, -.2); p.rotation.y = s*Math.PI/2; }));
-      { const p = add(new THREE.PlaneGeometry(1.6, .32), hdr(3, 2.4, 1.2), 0, 4.05, L/2 + .012); }
-    } else {
-      add(RB(Wd, .72, L, .16, 3), paint, 0, .62, 0);
-      add(RB(Wd*.92, kind === 'cab' ? .78 : .62, L*.5, .18, 3), glassDark, 0, kind === 'cab' ? 1.32 : 1.22, -.15);
-      add(RB(Wd*.9, .06, L*.48, .03), paint, 0, kind === 'cab' ? 1.72 : 1.55, -.15);
-      if (kind === 'cab'){ add(new THREE.BoxGeometry(.5, .14, .2), hdr(3.2, 1.9, .3), 0, 1.82, .1); }
-      add(new THREE.BoxGeometry(Wd*.98, .12, .12), chrome, 0, .45, L/2);
+    const g = new THREE.Group(), paint = snowify(phys(color, { roughness:.34, metalness:.45, clearcoat:1, clearcoatRoughness:.1, envMapIntensity:.6 }), snowAmt);
+    const add = (geo, m, x = 0, y = 0, z = 0) => { const mm = new THREE.Mesh(geo, m); mm.position.set(x, y, z); mm.castShadow = true; mm.receiveShadow = true; g.add(mm); return mm; };
+    const bus = kind === 'bus', cab = kind === 'cab';
+    const L = bus ? 8.4 : cab ? 4.55 : 4.4, Wd = bus ? 2.44 : cab ? 1.78 : 1.76, wr = bus ? .5 : .33, axle = bus ? [1.35, 6.2] : cab ? [.85, 3.65] : [.88, 3.5];
+    let lampY, tailY;
+    if (bus){   // Routemaster : deux ponts, angles arrondis, capot avant, bandeau crème
+      add(ext(prof(L, .32, axle, [[L, 1.55], [L - .25, 1.62], [L - .25, 4.1, L - .2, 4.38], [.3, 4.38], [0, 4.0, 0, 4.38], [0, .55]], wr + .08), Wd, .12), paint);
+      add(new THREE.BoxGeometry(Wd + .03, .16, L - .5), cream, 0, 2.38, -.05);
+      [[1.55, 2.2], [3.1, 3.85]].forEach(([y0, y1]) => { const m = new THREE.MeshBasicMaterial({ map:busWin.clone(), color:new THREE.Color(1.45, 1.2, .95) }); m.map.needsUpdate = true; m.map.repeat.set(1/(L - 1.05), 1/(y1 - y0)); m.map.offset.set(-.35/(L - 1.05), -y0/(y1 - y0));
+        add(ext(quad([[.35, y0], [L - .7, y0], [L - .7, y1], [.35, y1]]), Wd + .04, .02), m, 0, 0, -L/2); });
+      add(ext(quad([[L - .62, 1.62], [L - .3, 1.62], [L - .3, 2.2], [L - .62, 2.2]]), Wd - .3, .02), glassDark, 0, 0, -L/2);
+      add(new THREE.BoxGeometry(1.3, .28, .05), hdr(3, 2.4, 1.1), 0, 3.95, L/2 + .02);   // girouette de destination
+      add(new THREE.BoxGeometry(.9, .55, .06), chrome, 0, .95, L/2 + .02);               // calandre
+      lampY = .95; tailY = 1.0;
+    } else if (cab){   // taxi noir londonien : toit haut et galbé, capot plongeant, calandre chromée, enseigne TAXI
+      add(ext(prof(L, .3, axle, [[L, .55], [L, .82, L + .02, .9], [L - .78, 1.0, L - .35, 1.02], [L - 1.2, 1.08], [L - 1.62, 1.68, L - 1.32, 1.64], [.5, 1.74, 1.0, 1.78], [0, 1.1, .05, 1.62], [0, .55]]), Wd), paint);
+      add(ext(quad([[L - 1.55, 1.12], [L - 2.25, 1.12], [L - 2.25, 1.6], [L - 1.62, 1.6]]), Wd + .02, .01), glassDark, 0, 0, -L/2); add(ext(quad([[L - 2.38, 1.12], [1.35, 1.12], [1.35, 1.64], [L - 2.38, 1.64]]), Wd + .02, .01), glassDark, 0, 0, -L/2);
+      add(ext(quad([[1.22, 1.12], [.45, 1.12], [.3, 1.58], [1.22, 1.62]]), Wd + .02, .01), glassDark, 0, 0, -L/2);
+      add(ext(quad([[L - 1.24, 1.1], [L - 1.6, 1.62], [L - 1.68, 1.6], [L - 1.32, 1.08]]), Wd - .28, .01), glassDark, 0, 0, -L/2);
+      add(new THREE.BoxGeometry(.62, .34, .05), chrome, 0, .72, L/2 + .02); add(new THREE.BoxGeometry(Wd*.96, .1, .14), chrome, 0, .42, L/2 + .02); add(new THREE.BoxGeometry(Wd*.96, .1, .14), chrome, 0, .42, -L/2 - .02);
+      add(RB(.46, .14, .2, .03), cabSign, 0, 1.84, -.4);
+      lampY = .76; tailY = .8;
+    } else {   // berline
+      add(ext(prof(L, .3, axle, [[L, .5], [L, .72, L + .03, .8], [L - .95, .9, L - .5, .92], [L - 1.35, .95], [L - 2.0, 1.42, L - 1.65, 1.4], [1.1, 1.44, 1.6, 1.48], [.3, .98, .55, 1.2], [0, .9, .05, .96], [0, .5]]), Wd), paint);
+      add(ext(quad([[L - 1.4, .99], [L - 2.0, 1.38], [1.25, 1.4], [.5, .99]]), Wd + .02, .01), glassDark, 0, 0, -L/2);
+      add(ext(quad([[L - 1.36, .97], [L - 1.96, 1.39], [L - 2.04, 1.37], [L - 1.44, .95]]), Wd - .26, .01), glassDark, 0, 0, -L/2);
+      add(new THREE.BoxGeometry(Wd*.95, .09, .12), chrome, 0, .4, L/2 + .02);
+      lampY = .7; tailY = .78;
     }
-    const wy = kind === 'bus' ? .52 : .34;
-    [[-1, 1], [1, 1], [-1, -1], [1, -1]].forEach(([s, f]) => { const wh = add(new THREE.CylinderGeometry(wy, wy, .26, 16), tyre, s*(Wd/2 - .1), wy, f*(L/2 - (kind === 'bus' ? 1.5 : .85))); wh.rotation.z = Math.PI/2; });
+    // roues : pneu, jante chromée, enjoliveur
+    axle.forEach(ax => [-1, 1].forEach(s => { const x = s*(Wd/2 - (bus ? .2 : .14)), z = ax - L/2;
+      const ty = add(new THREE.CylinderGeometry(wr, wr, bus ? .3 : .22, 24), tyre, x, wr, z); ty.rotation.z = Math.PI/2;
+      const rim = add(new THREE.CylinderGeometry(wr*.62, wr*.62, (bus ? .3 : .22) + .01, 20), rimMat, x, wr, z); rim.rotation.z = Math.PI/2;
+      const hub = add(new THREE.CylinderGeometry(wr*.22, wr*.22, (bus ? .3 : .22) + .03, 12), chrome, x, wr, z); hub.rotation.z = Math.PI/2; }));
+    // optiques : phares ronds et feux arrière (lentilles + halos)
     const lights = [];
-    [-1, 1].forEach(s => { lights.push([s*(Wd/2 - .28), kind === 'bus' ? .9 : .66, L/2 + .05, 4.2, 3.8, 3.2, .55, 0], [s*(Wd/2 - .28), kind === 'bus' ? .9 : .66, L/2 + .05, 1.6, 1.5, 1.3, 2.4, 0], [s*(Wd/2 - .22), kind === 'bus' ? 1.0 : .72, -L/2 - .05, 2.6, .25, .2, .5, 0], [s*(Wd/2 - .22), kind === 'bus' ? 1.0 : .72, -L/2 - .05, 1.1, .1, .08, 1.4, 0]); });
+    [-1, 1].forEach(s => { const lx = s*(Wd/2 - (bus ? .3 : .26));
+      const hl = add(new THREE.CylinderGeometry(bus ? .13 : .1, bus ? .13 : .1, .04, 18), lampLens, lx, lampY, L/2 + .03); hl.rotation.x = Math.PI/2;
+      add(new THREE.BoxGeometry(.16, .1, .03), tailLens, s*(Wd/2 - .18), tailY, -L/2 - .03);
+      lights.push([lx, lampY, L/2 + .08, 4.2, 3.8, 3.2, .45, 0], [lx, lampY, L/2 + .08, 1.4, 1.3, 1.1, 1.3, 0], [s*(Wd/2 - .18), tailY, -L/2 - .08, 2.6, .25, .2, .5, 0], [s*(Wd/2 - .18), tailY, -L/2 - .08, 1.1, .1, .08, 1.4, 0]); });
     const gl = glows(lights, { fog:.0035, core:.6 }); g.add(gl);
     return { g, L };
   };
   [[-3.25, 27, '#2B2F38', 1], [-3.25, 15, '#6E1F25', 1], [-3.25, -19, '#3A4A5A', 1], [-3.25, -31, '#151A22', 1], [-3.25, -86, '#5A5F66', 1], [3.25, 37, '#1C2533', -1], [3.25, 20, '#7A7D82', -1], [3.25, -13, '#2A1E1A', -1], [3.25, -42, '#202B22', -1], [3.25, -92, '#4A1018', -1]].forEach(([x, z, c, dir]) => {
-    const v = vehicle('car', c, .95); v.g.position.set(x, .02, z); v.g.rotation.y = dir > 0 ? Math.PI : 0; v.g.children.forEach(m => { if (m.material && m.material.isShaderMaterial) m.visible = false; }); city.add(v.g);
+    const v = vehicle(c === '#151A22' ? 'cab' : 'car', c, .95); v.g.position.set(x, .02, z); v.g.rotation.y = dir > 0 ? Math.PI : 0; v.g.children.forEach(m => { if (m.material && (m.material.isShaderMaterial || m.material === lampLens || m.material === tailLens || m.material === cabSign)) m.visible = false; }); city.add(v.g);
   });
-  const traffic = [vehicle('cab', '#0B0C0F', .55), vehicle('bus', '#B3141E', .5), vehicle('cab', '#0B0C0F', .55), vehicle('car', '#2C3440', .5)].map(v => {
+  const traffic = [vehicle('cab', '#0B0C0F', .12), vehicle('bus', '#B3141E', .12), vehicle('cab', '#0B0C0F', .12), vehicle('car', '#2C3440', .12)].map(v => {
     v.g.visible = false; city.add(v.g);
     const beam = new THREE.Mesh(new THREE.CylinderGeometry(.12, 2.6, 9, 20, 1, true).translate(0, -4.5, 0).rotateX(-Math.PI/2 + .06), coneMat(1, .95, .85, .07)); beam.position.set(0, .7, v.L/2 + .1); v.g.add(beam);
     const pool = decals([[0, .02, v.L/2 + 4, 3.6, 8, 0]], new THREE.Color(1.1, 1.05, .95), .35); v.g.add(pool);
@@ -2026,7 +2074,17 @@ async function initGL(progress = () => {}){
     [-1, 1].forEach(s => { A(new THREE.BoxGeometry(11, 32, 11), fl, s*30, 50, 26); A(new THREE.ConeGeometry(5, 12, 8), dm, s*30, 72, 26); }); }
   { const el = []; for (let x = -88; x <= 88; x += 5.5) el.push([x, 4.4, -158.6, 2.6, 1.8, .9, .8, .1]); for (let x = -300; x <= 300; x += 9) el.push([x, 1.2, -340, 2.4, 1.6, .8, 2.2, .3]);
     city.add(glows(el, { fog:.0028, core:.5 }));
-    const rs = []; for (let k = 0; k < 26; k++) rs.push([-200 + k*16 + R()*6, -1.55, -300 + R()*30, 1.2, 40, 0]); rs.push([3, -1.55, -250, 4, 120, 0]); city.add(decals(rs, new THREE.Color(.9, .62, .3), .18)); }
+    const rs = []; for (let k = 0; k < 26; k++) rs.push([-200 + k*16 + R()*6, -1.55, -300 + R()*30, 1.2, 40, 0]); rs.push([3, -1.55, -250, 4, 120, 0]);
+    // pont de Westminster en travers de la vue : tablier vert, arches, réverbères doubles
+    const bm = std('#1F3A30', { roughness:.6, metalness:.3, emissive:Lc('#0A1410'), emissiveIntensity:.6 }), bz = -268;
+    { const parts = []; const deck = new THREE.BoxGeometry(320, 1.4, 15); deck.translate(0, 3.6, bz); parts.push(deck);
+      for (let x = -150; x <= 150; x += 30){ const pier = new THREE.BoxGeometry(4.5, 6, 16); pier.translate(x, .4, bz); parts.push(pier);
+        const arc = new THREE.TorusGeometry(12.8, .9, 6, 24, Math.PI); arc.scale(1, .32, 8.4); arc.translate(x + 15, 2.9, bz); parts.push(arc); }
+      [-1, 1].forEach(s => { const par = new THREE.BoxGeometry(320, .9, .35); par.translate(0, 4.75, bz + s*7.3); parts.push(par); });
+      far.add(new THREE.Mesh(merge(parts), bm)); }
+    const bl = []; for (let x = -150; x <= 150; x += 9) [-1, 1].forEach(s => { bl.push([x, 7.4, bz + s*7.3, 2.6, 1.8, .9, 1.1, .15]); rs.push([x, -1.55, bz + 30 + s*2, .9, 34, 0]); });
+    city.add(glows(bl, { fog:.0026, core:.55 }));
+    city.add(decals(rs, new THREE.Color(.9, .62, .3), .18)); }
   progress(.62); await pause();
 
   /* ----- ciel : dégradé, nuages éclairés par la ville, lune et quelques étoiles ----- */
@@ -2245,14 +2303,44 @@ async function initGL(progress = () => {}){
   // le manteau de brique est ouvert : un vrai foyer en retrait (UV monde, l'appareil se raccorde d'un morceau à l'autre)
   { const pcs = [[-1.5, -.86, 0, 4.2], [.86, 1.5, 0, 4.2], [-.86, .86, 1.02, 4.2]].map(([x0, x1, y0, y1]) => { const g = new THREE.BoxGeometry(x1 - x0, y1 - y0, .45).toNonIndexed(); g.translate((x0 + x1)/2, (y0 + y1)/2, -4.78); return worldUV(g, 1.6, 1.35); });
     sh(add(merge(pcs), std('#E2D2C2', { map:stockMap, normalMap:stockN, roughness:.92, envMapIntensity:.3 }), 0, 0, 0), true, true); }
-  [-1.08, 1.08].forEach(x => { sh(add(RB(.36, 1.32, .22, .03), marbleMat, x, .66, -4.47)); sh(add(RB(.46, .12, .28, .03), marbleMat, x, 1.27, -4.45)); sh(add(RB(.46, .1, .28, .03), marbleMat, x, .05, -4.45)); });
-  sh(add(RB(2.5, .34, .24, .04), marbleMat, 0, 1.2, -4.46)); sh(add(RB(3.1, .1, .48, .03), marbleMat, 0, 1.43, -4.37)); sh(add(RB(3.2, .05, .52, .02), marbleMat, 0, 1.5, -4.36));
-  add(RB(1.72, .08, .1, .02), iron, 0, 1.02, -4.42); [-.86, .86].forEach(x => add(RB(.08, 1.02, .1, .02), iron, x, .51, -4.42));
+  // cheminée victorienne londonienne : insert en fonte à arche, carreaux émaillés, pilastres cannelés, consoles, frise et tablette en marbre
+  const tileC = cv(64, 320, (g, w, h) => { for (let k = 0; k < 5; k++){ const y = k*64, gr = g.createLinearGradient(0, y, 0, y + 64); gr.addColorStop(0, '#1F5A52'); gr.addColorStop(1, '#16423C'); g.fillStyle = gr; g.fillRect(0, y, 64, 64);
+      g.fillStyle = '#E9DDB8'; g.beginPath(); g.moveTo(32, y + 10); g.bezierCurveTo(44, y + 20, 42, y + 34, 32, y + 40); g.bezierCurveTo(22, y + 34, 20, y + 20, 32, y + 10); g.fill();
+      g.fillStyle = '#C99A3E'; g.beginPath(); g.arc(32, y + 26, 4, 0, 7); g.fill(); g.strokeStyle = '#3E7A58'; g.lineWidth = 3; g.beginPath(); g.moveTo(32, y + 40); g.lineTo(32, y + 56); g.moveTo(32, y + 50); g.quadraticCurveTo(20, y + 44, 14, y + 50); g.moveTo(32, y + 50); g.quadraticCurveTo(44, y + 44, 50, y + 50); g.stroke();
+      g.strokeStyle = 'rgba(10,20,18,.8)'; g.lineWidth = 2; g.strokeRect(1, y + 1, 62, 62); } });
+  const tileMat = phys('#ffffff', { map:tex(tileC), roughness:.18, clearcoat:1, clearcoatRoughness:.05, envMapIntensity:1.1 });
+  const castIron = phys('#141516', { metalness:.85, roughness:.34, clearcoat:.3, envMapIntensity:.9 });
+  // carreaux de part et d'autre de l'insert
+  [-1, 1].forEach(s => { const p = add(new THREE.PlaneGeometry(.24, 1.0), tileMat, s*.74, .5, -4.548); });
+  // plaque de fonte percée d'une arche, liseré de laiton, frise moulée
+  { const sp = new THREE.Shape(); sp.moveTo(-.62, 0); sp.lineTo(.62, 0); sp.lineTo(.62, 1.0); sp.lineTo(-.62, 1.0); sp.lineTo(-.62, 0);
+    const arch = new THREE.Path(); arch.moveTo(-.46, 0); arch.lineTo(-.46, .55); arch.absellipse(0, .55, .46, .29, Math.PI, 0, true); arch.lineTo(.46, 0); arch.lineTo(-.46, 0); sp.holes.push(arch);
+    const ig = new THREE.ExtrudeGeometry(sp, { depth:.04, bevelEnabled:true, bevelThickness:.012, bevelSize:.012, bevelSegments:2, curveSegments:28 }); ig.translate(0, 0, -4.56); sh(add(ig, castIron, 0, 0, 0), false, true);
+    const ac = new THREE.CurvePath(); ac.add(new THREE.LineCurve3(new V3(-.47, 0, 0), new V3(-.47, .55, 0))); ac.add(new THREE.EllipseCurve(0, .55, .47, .3, Math.PI, 0, true).getPoints ? new THREE.CatmullRomCurve3(new THREE.EllipseCurve(0, .55, .47, .3, Math.PI, 0, true).getPoints(24).map(p => new V3(p.x, p.y, 0))) : null); ac.add(new THREE.LineCurve3(new V3(.47, .55, 0), new V3(.47, 0, 0)));
+    add(new THREE.TubeGeometry(ac, 80, .011, 6), brass, 0, 0, -4.508);
+    add(RB(1.24, .1, .06, .02), castIron, 0, .93, -4.5); for (let k = -5; k <= 5; k++) add(new THREE.SphereGeometry(.018, 8, 6), brass, k*.11, .93, -4.47); }
+  // marbre : plinthes, pilastres cannelés, consoles en volute, frise à tablette et rosaces, tablette moulurée
+  [-1, 1].forEach(s => { const x = s*1.08;
+    sh(add(RB(.46, .14, .3, .02), marbleMat, x, .07, -4.43)); sh(add(RB(.34, .98, .2, .03), marbleMat, x, .63, -4.46));
+    for (let k = -1.5; k <= 1.5; k++) add(new THREE.CylinderGeometry(.016, .016, .86, 8), marbleMat, x + k*.065, .63, -4.355);
+    const cs = new THREE.Shape(); cs.moveTo(0, 0); cs.lineTo(.07, 0); cs.bezierCurveTo(.08, .1, .2, .14, .17, .25); cs.bezierCurveTo(.16, .3, .06, .3, 0, .28); cs.lineTo(0, 0);
+    const cg = new THREE.ExtrudeGeometry(cs, { depth:.22, bevelEnabled:true, bevelThickness:.012, bevelSize:.01, bevelSegments:2, curveSegments:12 }); cg.translate(0, 0, -.11); cg.rotateY(-Math.PI/2); sh(add(cg, marbleMat, x, 1.12, -4.36));
+    add(new THREE.TorusGeometry(.06, .018, 8, 20), marbleMat, x, 1.27, -4.345); add(new THREE.SphereGeometry(.03, 10, 8), marbleMat, x, 1.27, -4.34); });
+  [-.89, .89].forEach(x => add(RB(.06, 1.02, .05, .01), marbleMat, x, .51, -4.53)); add(RB(1.84, .08, .05, .01), marbleMat, 0, 1.06, -4.53);
+  sh(add(RB(1.84, .26, .22, .03), marbleMat, 0, 1.23, -4.46)); add(RB(.62, .17, .04, .015), marbleMat, 0, 1.24, -4.34);
+  sh(add(RB(3.0, .05, .42, .02), marbleMat, 0, 1.385, -4.39)); sh(add(RB(3.12, .07, .48, .025), marbleMat, 0, 1.445, -4.37)); sh(add(RB(3.2, .05, .52, .02), marbleMat, 0, 1.5, -4.36));
   add(new THREE.PlaneGeometry(1.72, 1.02), fireboxMat, 0, .51, -4.92);
   [-1, 1].forEach(s => { const p = add(new THREE.PlaneGeometry(.5, 1.02), fireboxMat, s*.84, .51, -4.67); p.rotation.y = -s*Math.PI/2; });
   add(new THREE.PlaneGeometry(1.72, .5), std('#120A08', { roughness:1 }), 0, 1.0, -4.67).rotation.x = Math.PI/2;
-  sh(add(RB(3.1, .07, .8, .02), hearthMat, 0, .035, -4.08), false, true);
-  { const fender = new THREE.Group(); fender.position.set(0, 0, -3.98); salon.add(fender); add(RB(2.1, .04, .04, .01), brass, 0, .17, 0, fender); for (let k = 0; k < 9; k++) add(new THREE.CylinderGeometry(.012, .012, .14, 6), brass, -1 + k*.25, .1, 0, fender); [-1.05, 1.05].forEach(x => add(new THREE.SphereGeometry(.036, 12, 10), brass, x, .2, 0, fender)); }
+  // âtre en carreaux encaustiques (motif géométrique Victorien)
+  { const hc = cv(512, 128, (g, w, h) => { const C = ['#7A2A1A', '#E7DCC2', '#1F2A30', '#B8862E']; for (let y = 0; y < h; y += 32) for (let x = 0; x < w; x += 32){ const k = ((x/32) + (y/32)) % 2; g.fillStyle = k ? C[0] : C[1]; g.fillRect(x, y, 32, 32); g.fillStyle = k ? C[3] : C[2]; g.beginPath(); g.moveTo(x + 16, y + 4); g.lineTo(x + 28, y + 16); g.lineTo(x + 16, y + 28); g.lineTo(x + 4, y + 16); g.fill(); g.strokeStyle = 'rgba(20,14,10,.6)'; g.strokeRect(x + .5, y + .5, 31, 31); }
+      g.fillStyle = '#1F2A30'; g.fillRect(0, 0, w, 6); g.fillRect(0, h - 6, w, 6); });
+    sh(add(RB(3.1, .07, .8, .02), phys('#ffffff', { map:tex(hc, [1, 1]), roughness:.32, clearcoat:.5, clearcoatRoughness:.15, envMapIntensity:.7 }), 0, .035, -4.08), false, true); }
+  // garde-feu en laiton : main courante galbée, plinthe, balustres, pommeaux
+  { const path = new THREE.CatmullRomCurve3([new V3(-1.12, 0, -4.42), new V3(-1.12, 0, -4.06), new V3(-.96, 0, -3.96), new V3(.96, 0, -3.96), new V3(1.12, 0, -4.06), new V3(1.12, 0, -4.42)], false, 'catmullrom', .2);
+    add(new THREE.TubeGeometry(path, 90, .016, 8), brass, 0, .19, 0); add(new THREE.TubeGeometry(path, 90, .028, 8), brass, 0, .085, 0);
+    path.getSpacedPoints(26).forEach(p => add(new THREE.CylinderGeometry(.008, .008, .1, 6), brass, p.x, .14, p.z));
+    [[-1.12, -4.42], [1.12, -4.42], [-.96, -3.96], [.96, -3.96]].forEach(([x, z]) => add(new THREE.SphereGeometry(.03, 12, 10), brass, x, .22, z)); }
   { const tools = new THREE.Group(); tools.position.set(1.55, 0, -4.05); salon.add(tools); add(new THREE.CylinderGeometry(.09, .12, .04, 16), brass, 0, .02, 0, tools); add(new THREE.CylinderGeometry(.012, .012, .7, 8), brass, 0, .37, 0, tools); add(new THREE.SphereGeometry(.03, 10, 8), brass, 0, .74, 0, tools); [-1, 1].forEach(s => { const p = add(new THREE.CylinderGeometry(.008, .008, .62, 6), iron, s*.05, .38, 0, tools); p.rotation.z = s*.08; add(new THREE.SphereGeometry(.018, 8, 6), brass, s*.075, .7, 0, tools); }); }
   const fireLog = (x, y, z, ry, l) => { const g = new THREE.CylinderGeometry(.09, .1, l, 16); g.rotateZ(Math.PI/2); const m = add(g, logMat, x, y, z); m.rotation.y = ry; return m; };
   add(RB(1.1, .04, .3, .01), iron, 0, .08, -4.62); fireLog(0, .17, -4.66, .08, 1.05); fireLog(.04, .33, -4.69, -.22, .95); fireLog(-.18, .19, -4.51, .5, .75);
